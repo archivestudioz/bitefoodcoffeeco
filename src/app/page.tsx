@@ -127,9 +127,9 @@ const polaroids = [
     bg: "bg-pink-soft",
   },
   {
-    src: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-    alt: "Drinks cheers",
-    caption: "drinks szn",
+    src: "/photos/wild-4.jpg",
+    alt: "Late-night chicken sandwich, jersey on",
+    caption: "first bite",
     rotate: "rotate-3",
     bg: "bg-lime",
   },
@@ -234,13 +234,16 @@ function Hero() {
 
         <div className="relative md:col-span-5">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-tan shadow-bold">
-            <Image
-              src="/photos/hero.jpg"
-              alt="Late-night chicken sandwich, jersey on"
-              fill
-              priority
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="object-cover"
+            <video
+              src="/photos/hero.mp4"
+              poster="/photos/hero-poster.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="absolute inset-0 h-full w-full object-cover"
+              aria-label="Late-night Bite vibes"
             />
           </div>
           <div className="wobble absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-lime px-4 py-2 font-display text-2xl shadow-bold-sm sm:-bottom-6 sm:-left-6">
