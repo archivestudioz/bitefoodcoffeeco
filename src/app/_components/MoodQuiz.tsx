@@ -131,18 +131,21 @@ export function MoodQuiz() {
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close the Oracle" : "Open the Oracle"}
-        className={`group fixed bottom-5 right-5 z-50 flex items-center gap-3 transition-opacity duration-200 sm:bottom-6 sm:right-6 ${
+        className={`group fixed bottom-3 right-3 z-50 flex items-end gap-2 transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <span className="hidden translate-x-1 rotate-[-3deg] rounded-full border-2 border-ink bg-cream px-3 py-1.5 font-display text-sm leading-none text-ink shadow-bold-sm transition-transform group-hover:translate-x-0 group-hover:rotate-0 sm:inline-block">
+        <span className="mb-12 hidden translate-x-1 rotate-[-3deg] rounded-2xl border-2 border-ink bg-cream px-3 py-1.5 font-display text-sm leading-none text-ink shadow-bold-sm transition-transform group-hover:translate-x-0 group-hover:rotate-0 sm:inline-block">
           stuck? ask me ✦
         </span>
-        <span className="relative flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:-translate-y-1 sm:h-20 sm:w-20" style={{ filter: "drop-shadow(5px 5px 0 #0a0a0a)" }}>
-          <OracleFace bobbing ticking />
+        <span
+          className="relative block h-32 w-24 sm:h-40 sm:w-28"
+          style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
+        >
+          <OracleFace animated />
           <span
             aria-hidden="true"
-            className="absolute -right-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
+            className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
           >
             ✦
           </span>
@@ -165,7 +168,7 @@ export function MoodQuiz() {
           <div className="flex items-center justify-between gap-3 border-b-2 border-ink bg-pink px-4 py-3">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center">
-                <OracleFace size={36} detailed={false} ticking />
+                <OracleFace size={36} detailed={false} animated />
               </span>
               <div className="leading-tight">
                 <p className="font-display text-xl leading-none">the oracle</p>
@@ -214,116 +217,258 @@ export function MoodQuiz() {
 function OracleFace({
   size,
   className = "",
-  bobbing = false,
-  ticking = false,
+  animated = false,
   detailed = true,
 }: {
   size?: number;
   className?: string;
-  bobbing?: boolean;
-  ticking?: boolean;
+  animated?: boolean;
   detailed?: boolean;
 }) {
   const sized = size ? { width: size, height: size } : undefined;
+  // 100x140 viewBox: tall character with straw + legs when detailed,
+  // shorter framing when not (chat avatars hide arms/legs).
+  const viewBox = detailed ? "0 0 100 140" : "20 30 60 60";
   return (
     <span
-      className={`relative inline-flex ${size ? "" : "h-full w-full"} ${bobbing ? "animate-[bob_2.4s_ease-in-out_infinite]" : ""} ${className}`}
+      className={`relative inline-flex ${size ? "" : "h-full w-full"} ${className}`}
       style={sized}
       aria-hidden="true"
     >
       <svg
-        viewBox="0 0 60 60"
+        viewBox={viewBox}
         width="100%"
         height="100%"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="xMidYMid meet"
       >
-        {/* Outer clock rim */}
-        <circle
-          cx="30"
-          cy="30"
-          r="27"
-          fill="#ff98cb"
-          stroke="#0a0a0a"
-          strokeWidth="2.5"
-        />
-        {/* Cream clock face */}
-        <circle cx="30" cy="30" r="22" fill="#fff5e6" />
-
-        {detailed && (
-          <>
-            {/* Hour marks at 12 / 3 / 6 / 9 */}
-            <rect x="29.2" y="9.5" width="1.6" height="3.5" rx="0.6" fill="#0a0a0a" />
-            <rect x="47" y="29.2" width="3.5" height="1.6" rx="0.6" fill="#0a0a0a" />
-            <rect x="29.2" y="47" width="1.6" height="3.5" rx="0.6" fill="#0a0a0a" />
-            <rect x="9.5" y="29.2" width="3.5" height="1.6" rx="0.6" fill="#0a0a0a" />
-            {/* Minor marks */}
-            <circle cx="44.8" cy="15.2" r="0.7" fill="#0a0a0a" />
-            <circle cx="44.8" cy="44.8" r="0.7" fill="#0a0a0a" />
-            <circle cx="15.2" cy="44.8" r="0.7" fill="#0a0a0a" />
-            <circle cx="15.2" cy="15.2" r="0.7" fill="#0a0a0a" />
-          </>
-        )}
-
-        {/* Clock hands group — origin at center for rotation */}
+        {/* Whole character group — gets the hop + wiggle on bigger sizes */}
         <g
           style={{
-            transformOrigin: "30px 30px",
+            transformOrigin: "50px 130px",
+            transformBox: "fill-box",
+            animation: animated
+              ? "cup-hop 6.5s cubic-bezier(0.5,0,0.5,1) infinite"
+              : undefined,
           }}
-          className={ticking ? "[animation:tick_8s_steps(40)_infinite]" : ""}
         >
-          {/* Minute hand */}
-          <line
-            x1="30"
-            y1="30"
-            x2="30"
-            y2="14"
-            stroke="#0a0a0a"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          {/* Hour hand */}
-          <line
-            x1="30"
-            y1="30"
-            x2="40"
-            y2="30"
+          {detailed && (
+            <>
+              {/* Legs */}
+              <g
+                style={{
+                  transformOrigin: "40px 100px",
+                  transformBox: "fill-box",
+                  animation: animated
+                    ? "cup-walk-left 9.7s ease-in-out infinite"
+                    : undefined,
+                }}
+              >
+                <line
+                  x1="40"
+                  y1="100"
+                  x2="40"
+                  y2="120"
+                  stroke="#0a0a0a"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+                <ellipse
+                  cx="36"
+                  cy="125"
+                  rx="9"
+                  ry="5"
+                  fill="#fff5e6"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                />
+              </g>
+              <g
+                style={{
+                  transformOrigin: "60px 100px",
+                  transformBox: "fill-box",
+                  animation: animated
+                    ? "cup-walk-right 11.3s ease-in-out infinite"
+                    : undefined,
+                }}
+              >
+                <line
+                  x1="60"
+                  y1="100"
+                  x2="60"
+                  y2="120"
+                  stroke="#0a0a0a"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                />
+                <ellipse
+                  cx="64"
+                  cy="125"
+                  rx="9"
+                  ry="5"
+                  fill="#fff5e6"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                />
+              </g>
+
+              {/* Left arm (resting) */}
+              <g
+                style={{
+                  transformOrigin: "28px 78px",
+                  transformBox: "fill-box",
+                  animation: animated
+                    ? "cup-sip 13.3s ease-in-out infinite"
+                    : undefined,
+                }}
+              >
+                <path
+                  d="M 28 78 Q 16 92 14 108"
+                  stroke="#0a0a0a"
+                  strokeWidth="3.5"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+                <circle
+                  cx="14"
+                  cy="111"
+                  r="5.5"
+                  fill="#fff5e6"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                />
+              </g>
+
+              {/* Right arm (waving) */}
+              <g
+                style={{
+                  transformOrigin: "72px 78px",
+                  transformBox: "fill-box",
+                  animation: animated
+                    ? "cup-wave 7.7s ease-in-out infinite"
+                    : undefined,
+                }}
+              >
+                <path
+                  d="M 72 78 Q 85 75 90 64"
+                  stroke="#0a0a0a"
+                  strokeWidth="3.5"
+                  fill="none"
+                  strokeLinecap="round"
+                />
+                {/* Thumbs up hand */}
+                <circle
+                  cx="92"
+                  cy="61"
+                  r="6"
+                  fill="#fff5e6"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                />
+                <line
+                  x1="92"
+                  y1="56"
+                  x2="92"
+                  y2="51"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              </g>
+
+              {/* Straw */}
+              <line
+                x1="50"
+                y1="8"
+                x2="50"
+                y2="42"
+                stroke="#0a0a0a"
+                strokeWidth="5"
+                strokeLinecap="round"
+              />
+              {/* Lid */}
+              <ellipse
+                cx="50"
+                cy="42"
+                rx="24"
+                ry="5"
+                fill="#fff5e6"
+                stroke="#0a0a0a"
+                strokeWidth="2.5"
+              />
+              {/* Lid hole indicator */}
+              <ellipse
+                cx="50"
+                cy="42"
+                rx="6"
+                ry="1.5"
+                fill="none"
+                stroke="#0a0a0a"
+                strokeWidth="1.5"
+              />
+            </>
+          )}
+
+          {/* Cup body */}
+          <path
+            d="M 28 44 L 33 96 Q 33 100 37 100 L 63 100 Q 67 100 67 96 L 72 44 Z"
+            fill="#ff98cb"
             stroke="#0a0a0a"
             strokeWidth="2.5"
-            strokeLinecap="round"
+            strokeLinejoin="round"
           />
+
+          {/* Face — group so eyes blink together */}
+          <g>
+            {/* Eyes */}
+            <g
+              style={{
+                transformOrigin: "50px 66px",
+                transformBox: "fill-box",
+                animation: animated
+                  ? "cup-blink 4.3s ease-in-out infinite"
+                  : undefined,
+              }}
+            >
+              <ellipse
+                cx="42"
+                cy="66"
+                rx="6"
+                ry="7"
+                fill="#fff5e6"
+                stroke="#0a0a0a"
+                strokeWidth="2"
+              />
+              <ellipse
+                cx="58"
+                cy="66"
+                rx="6"
+                ry="7"
+                fill="#fff5e6"
+                stroke="#0a0a0a"
+                strokeWidth="2"
+              />
+              <circle cx="43" cy="66" r="3.2" fill="#0a0a0a" />
+              <circle cx="59" cy="66" r="3.2" fill="#0a0a0a" />
+              <circle cx="44.2" cy="64.5" r="1.1" fill="#fff5e6" />
+              <circle cx="60.2" cy="64.5" r="1.1" fill="#fff5e6" />
+            </g>
+
+            {/* Smile */}
+            <path
+              d="M 43 79 Q 50 84 57 79"
+              stroke="#0a0a0a"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              fill="none"
+            />
+
+            {/* Cheeks */}
+            <circle cx="35" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
+            <circle cx="65" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
+          </g>
         </g>
-        {/* Pivot dot */}
-        <circle cx="30" cy="30" r="1.6" fill="#0a0a0a" />
-
-        {/* Eyes — sit above the clock face */}
-        <g>
-          <circle cx="22" cy="22" r="3.2" fill="#fff5e6" stroke="#0a0a0a" strokeWidth="1.5" />
-          <circle cx="38" cy="22" r="3.2" fill="#fff5e6" stroke="#0a0a0a" strokeWidth="1.5" />
-          <circle cx="22.6" cy="22.6" r="1.4" fill="#0a0a0a" />
-          <circle cx="38.6" cy="22.6" r="1.4" fill="#0a0a0a" />
-          <circle cx="22.9" cy="22" r="0.45" fill="#fff5e6" />
-          <circle cx="38.9" cy="22" r="0.45" fill="#fff5e6" />
-        </g>
-
-        {/* Wide grin */}
-        <path
-          d="M 19 38 Q 30 47.5, 41 38"
-          stroke="#0a0a0a"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          fill="none"
-        />
-        {/* Inner mouth fill — gives it that cartoon depth */}
-        <path
-          d="M 21.5 38.5 Q 30 45, 38.5 38.5 Z"
-          fill="#ff98cb"
-          opacity="0.55"
-        />
-
-        {/* Cheeks */}
-        <circle cx="15.5" cy="31" r="1.8" fill="#ff98cb" opacity="0.85" />
-        <circle cx="44.5" cy="31" r="1.8" fill="#ff98cb" opacity="0.85" />
       </svg>
     </span>
   );
@@ -375,8 +520,8 @@ function QuizView({
 function ChatIntro() {
   return (
     <div className="flex items-start gap-2">
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-pink">
-        <OracleFace size={18} />
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center">
+        <OracleFace size={32} detailed={false} animated />
       </span>
       <div className="rounded-2xl rounded-tl-md border-2 border-ink bg-pink/40 px-3 py-2 font-mono text-[12px] leading-snug">
         hey ✦ can&apos;t decide? three quick ones and i&apos;ll plate you up.
@@ -449,8 +594,8 @@ function ResultView({
   return (
     <div className="grid gap-4">
       <div className="flex items-start gap-2">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-pink">
-          <OracleFace size={18} detailed={false} />
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center">
+          <OracleFace size={32} detailed={false} animated />
         </span>
         <div className="rounded-2xl rounded-tl-md border-2 border-ink bg-pink/40 px-3 py-2 font-mono text-[12px] leading-snug">
           based on the vibes ✦ here&apos;s your bite:
