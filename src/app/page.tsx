@@ -55,7 +55,7 @@ const explore = [
     line: "fresh food, no shortcuts. here's the why.",
     cta: "read it",
     href: "/story",
-    bg: "bg-tan",
+    bg: "bg-pink",
     rotate: "md:-rotate-1",
   },
   {
@@ -63,7 +63,7 @@ const explore = [
     line: "hackensack + fair lawn. open daily till 8pm.",
     cta: "get directions",
     href: "/locations",
-    bg: "bg-pink-soft",
+    bg: "bg-pink",
     rotate: "md:rotate-1",
   },
   {
@@ -71,7 +71,7 @@ const explore = [
     line: "feeding a crowd? we got you.",
     cta: "plan an event",
     href: "mailto:info@bitefoodcoffee.com?subject=Catering%20inquiry",
-    bg: "bg-lime",
+    bg: "bg-pink",
     rotate: "md:-rotate-1",
   },
 ];
@@ -89,14 +89,14 @@ const reviews = [
     quote:
       "Best breakfast in Bergen County. Crème brûlée waffle = worth the trip.",
     rotate: "rotate-1",
-    bg: "bg-pink-soft",
+    bg: "bg-cream",
   },
   {
     name: "Max E.",
     quote:
       "Halal, huge portions, killer coffee. We're regulars now. Steak & eggs never miss.",
     rotate: "-rotate-1",
-    bg: "bg-lime",
+    bg: "bg-cream",
   },
   {
     name: "Tasha K.",
@@ -110,7 +110,7 @@ const reviews = [
     quote:
       "Breakfast sandwich is a 10/10. Halal kitchen + hot honey = my whole personality now.",
     rotate: "-rotate-1",
-    bg: "bg-pink-soft",
+    bg: "bg-cream",
   },
 ];
 
@@ -138,21 +138,21 @@ const polaroids = [
     alt: "Late night burger run under the lamp post",
     caption: "late night moves",
     rotate: "rotate-2",
-    bg: "bg-tan",
+    bg: "bg-cream",
   },
   {
     src: "/photos/wild-3.jpg",
     alt: "Burger and iced coffee, dialed in",
     caption: "double-fisting",
     rotate: "-rotate-1",
-    bg: "bg-pink-soft",
+    bg: "bg-cream",
   },
   {
     src: "/photos/wild-4.jpg",
     alt: "Late-night chicken sandwich, jersey on",
     caption: "first bite",
     rotate: "rotate-3",
-    bg: "bg-lime",
+    bg: "bg-cream",
   },
 ];
 
@@ -181,7 +181,7 @@ function Nav() {
           href="/"
           className="font-display text-3xl leading-none tracking-tight"
         >
-          bite<span className="text-pink-deep">.</span>
+          bite<span className="text-ink">.</span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm font-semibold uppercase tracking-wider md:flex">
           <Link href="#menu" className="hover:underline">Menu</Link>
@@ -205,7 +205,7 @@ function Hero() {
     <section className="relative overflow-hidden bg-pink">
       <span
         aria-hidden
-        className="pointer-events-none absolute -right-8 top-10 font-display text-[220px] leading-none text-pink-deep/30 select-none rotate-12"
+        className="pointer-events-none absolute -right-8 top-10 font-display text-[220px] leading-none text-ink/15 select-none rotate-12"
       >
         ✺
       </span>
@@ -218,8 +218,8 @@ function Hero() {
 
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-12 md:items-center md:py-24 lg:py-28">
         <div className="relative z-10 md:col-span-7">
-          <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-tan px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
-            <span className="h-2 w-2 rounded-full bg-pink-deep" />
+          <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            <span className="h-2 w-2 rounded-full bg-ink" />
             100% halal · NJ
           </span>
 
@@ -231,7 +231,7 @@ function Hero() {
             in jersey.
           </h1>
 
-          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink-soft">
+          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink/70">
             Brunch. Dinner. Matcha. Pancakes at 7pm.
             <br />
             Made fresh, made halal, made for you.
@@ -246,7 +246,7 @@ function Hero() {
             </a>
             <Link
               href="#menu"
-              className="press inline-flex h-14 items-center rounded-full border-2 border-ink bg-tan px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
+              className="press inline-flex h-14 items-center rounded-full border-2 border-ink bg-cream px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
             >
               see the menu
             </Link>
@@ -254,7 +254,7 @@ function Hero() {
         </div>
 
         <div className="relative md:col-span-5">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-tan shadow-bold">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
             <video
               src="/photos/hero.mp4"
               poster="/photos/hero-poster.jpg"
@@ -267,7 +267,7 @@ function Hero() {
               aria-label="Late-night Bite vibes"
             />
           </div>
-          <div className="wobble absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-lime px-4 py-2 font-display text-2xl shadow-bold-sm sm:-bottom-6 sm:-left-6">
+          <div className="wobble absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-4 py-2 font-display text-2xl shadow-bold-sm sm:-bottom-6 sm:-left-6">
             yum*
           </div>
           <div className="wobble absolute -top-3 -right-3 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm">
@@ -287,7 +287,7 @@ function Marquee() {
         {doubled.map((bit, i) => (
           <span key={i} className="flex items-center gap-10">
             <span>{bit}</span>
-            <span aria-hidden className="text-lime">✺</span>
+            <span aria-hidden className="text-pink">✺</span>
           </span>
         ))}
       </div>
@@ -297,7 +297,7 @@ function Marquee() {
 
 function Featured() {
   return (
-    <section id="menu" className="border-b-2 border-ink bg-tan">
+    <section id="menu" className="border-b-2 border-ink bg-cream">
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-24">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
@@ -307,7 +307,7 @@ function Featured() {
             <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
               food
               <br />
-              <span className="text-pink-deep">people scream</span>
+              <span className="text-pink">people scream</span>
               <br />
               about.
             </h2>
@@ -324,7 +324,7 @@ function Featured() {
           {featured.map((item, i) => (
             <article
               key={item.name}
-              className={`lift relative overflow-hidden rounded-[28px] border-2 border-ink bg-cream shadow-bold ${
+              className={`lift relative overflow-hidden rounded-[28px] border-2 border-ink bg-pink shadow-bold ${
                 i % 2 === 0 ? "sm:rotate-[-1deg]" : "sm:rotate-[1deg]"
               }`}
             >
@@ -336,13 +336,13 @@ function Featured() {
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition duration-500 hover:scale-105"
                 />
-                <span className="absolute left-3 top-3 rotate-[-6deg] rounded-full border-2 border-ink bg-lime px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+                <span className="absolute left-3 top-3 rotate-[-6deg] rounded-full border-2 border-ink bg-cream px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
                   {item.tag}
                 </span>
               </div>
               <div className="p-6">
                 <h3 className="font-display text-3xl leading-none">{item.name}</h3>
-                <p className="mt-2 text-sm font-medium leading-relaxed text-ink-soft">
+                <p className="mt-2 text-sm font-medium leading-relaxed text-ink/75">
                   {item.blurb}
                 </p>
               </div>
@@ -360,7 +360,7 @@ function PolaroidWall() {
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-16">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-tan px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-cream px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
               in the wild ✦
             </span>
             <h2 className="mt-4 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
@@ -407,11 +407,11 @@ function PolaroidWall() {
 
 function Explore() {
   return (
-    <section className="border-b-2 border-ink bg-pink">
+    <section className="border-b-2 border-ink bg-cream">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-tan px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
               more from bite ✦
             </span>
             <h2 className="mt-5 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
@@ -430,7 +430,7 @@ function Explore() {
               <h3 className="font-display text-4xl leading-none">
                 {card.title}
               </h3>
-              <p className="mt-3 text-base font-medium text-ink-soft">
+              <p className="mt-3 text-base font-medium text-ink/75">
                 {card.line}
               </p>
               <span className="mt-6 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-widest">
@@ -450,16 +450,16 @@ function Explore() {
 function Reviews() {
   const doubled = [...reviews, ...reviews];
   return (
-    <section className="border-b-2 border-ink bg-tan overflow-hidden">
+    <section className="border-b-2 border-ink bg-pink overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:pt-20">
         <div className="max-w-2xl">
-          <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+          <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-cream px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
             loved
           </span>
           <h2 className="mt-5 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
             regulars
             <br />
-            <span className="text-pink-deep">say it best.</span>
+            <span className="text-ink">say it best.</span>
           </h2>
         </div>
       </div>
@@ -471,7 +471,7 @@ function Reviews() {
               key={i}
               className={`relative flex w-[320px] shrink-0 flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold transition-transform duration-300 ease-out hover:scale-[1.06] hover:z-10 sm:w-[360px] ${r.bg} ${r.rotate}`}
             >
-              <div className="flex gap-1 text-pink-deep" aria-label="5 stars">
+              <div className="flex gap-1 text-pink" aria-label="5 stars">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star key={j} />
                 ))}
@@ -500,7 +500,7 @@ function Footer() {
               href="/"
               className="font-display text-5xl leading-none tracking-tight"
             >
-              bite<span className="text-lime">.</span>
+              bite<span className="text-pink">.</span>
             </Link>
             <p className="mt-3 max-w-sm text-sm font-medium leading-relaxed text-pink/80">
               Halal breakfast, brunch & dinner. Hackensack + Fair Lawn, NJ.
@@ -508,15 +508,15 @@ function Footer() {
           </div>
 
           <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-semibold uppercase tracking-wider">
-            <a href={ORDER_URL} className="hover:text-lime">Order</a>
-            <Link href="/story" className="hover:text-lime">Story</Link>
-            <Link href="/locations" className="hover:text-lime">Locations</Link>
-            <Link href="/catering" className="hover:text-lime">Catering</Link>
+            <a href={ORDER_URL} className="hover:text-cream">Order</a>
+            <Link href="/story" className="hover:text-cream">Story</Link>
+            <Link href="/locations" className="hover:text-cream">Locations</Link>
+            <Link href="/catering" className="hover:text-cream">Catering</Link>
             <a
               href="https://instagram.com/bitefoodcoffeeco"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-lime"
+              className="hover:text-cream"
             >
               Instagram
             </a>

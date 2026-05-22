@@ -18,7 +18,7 @@ export function RotatingWord() {
     <span className="relative inline-block align-top">
       <span
         key={i}
-        className="squiggle inline-block animate-fade-up decoration-pink-deep"
+        className="squiggle inline-block animate-fade-up decoration-ink"
       >
         {words[i]}
       </span>

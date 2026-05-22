@@ -1,31 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f998cb;
-  --foreground: #181312;
-  --pink: #f998cb;
-  --pink-soft: #ffe1ef;
-  --pink-deep: #d6418a;
-  --ink: #181312;
-  --ink-soft: #3a2a26;
-  --cream: #fff7e9;
-  --tan: #ead8b0;
-  --tan-deep: #d6bf8d;
-  --lime: #d4ff4f;
+  --background: #ff98cb;
+  --foreground: #0a0a0a;
+  --pink: #ff98cb;
+  --cream: #fff5e6;
+  --ink: #0a0a0a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-pink: var(--pink);
-  --color-pink-soft: var(--pink-soft);
-  --color-pink-deep: var(--pink-deep);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
   --color-cream: var(--cream);
-  --color-tan: var(--tan);
-  --color-tan-deep: var(--tan-deep);
-  --color-lime: var(--lime);
+  --color-ink: var(--ink);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 }
@@ -53,11 +41,8 @@ body {
 .shadow-bold-sm {
   box-shadow: 4px 4px 0 0 var(--ink);
 }
-.shadow-bold-pink {
-  box-shadow: 6px 6px 0 0 var(--pink-deep);
-}
 
-/* Marquee */
+/* Marquees */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
