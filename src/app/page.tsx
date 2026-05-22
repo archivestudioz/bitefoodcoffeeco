@@ -215,7 +215,6 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <Marquee />
         <Featured />
         <PolaroidWall />
         <Reviews />
@@ -254,7 +253,7 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b-2 border-ink bg-ink text-cream">
+    <section className="relative flex min-h-[88vh] items-center overflow-hidden border-b-2 border-ink bg-ink text-cream">
       {/* Background video — bg-ink behind it darkens slightly, no pink tint */}
       <video
         src="/photos/hero.mp4"
@@ -269,7 +268,7 @@ function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:py-32">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-24 lg:py-28">
         <div className="max-w-3xl">
           <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-ink shadow-bold-sm">
             <span className="h-2 w-2 rounded-full bg-ink" />
