@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RotatingWord } from "./_components/RotatingWord";
+import { FeaturedSlider } from "./_components/FeaturedSlider";
 
 const ORDER_URL = "https://bitefoodcoffee.com/order";
 
@@ -46,6 +47,20 @@ const featured = [
     tag: "vibey",
     image:
       "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "French Onion Omelette",
+    blurb: "Caramelized onions, gruyère, three eggs.",
+    tag: "rich",
+    image:
+      "https://images.unsplash.com/photo-1510693206972-df098062cb71?auto=format&fit=crop&w=1200&q=80",
+  },
+  {
+    name: "Turkey BALT",
+    blurb: "Roasted turkey, beef bacon, lettuce, avo, tomato.",
+    tag: "stacked",
+    image:
+      "https://images.unsplash.com/photo-1539252554453-80ab65ce3586?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
@@ -233,12 +248,12 @@ function Hero() {
 function Marquee() {
   const doubled = [...marqueeBits, ...marqueeBits];
   return (
-    <section className="marquee-container border-y-2 border-ink bg-ink py-4 text-pink overflow-hidden">
+    <section className="marquee-container border-y-2 border-ink bg-pink py-4 text-ink overflow-hidden">
       <div className="flex animate-marquee gap-10 whitespace-nowrap font-display text-3xl sm:text-4xl">
         {doubled.map((bit, i) => (
           <span key={i} className="flex items-center gap-10">
             <span>{bit}</span>
-            <span aria-hidden className="text-pink">✺</span>
+            <span aria-hidden className="text-ink">✺</span>
           </span>
         ))}
       </div>
@@ -271,34 +286,8 @@ function Featured() {
           </a>
         </div>
 
-        <div className="mt-14 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((item, i) => (
-            <article
-              key={item.name}
-              className={`lift relative overflow-hidden rounded-[28px] border-2 border-ink bg-pink shadow-bold ${
-                i % 2 === 0 ? "sm:rotate-[-1deg]" : "sm:rotate-[1deg]"
-              }`}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden border-b-2 border-ink">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition duration-500 hover:scale-105"
-                />
-                <span className="absolute left-3 top-3 rotate-[-6deg] rounded-full border-2 border-ink bg-cream px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
-                  {item.tag}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-3xl leading-none">{item.name}</h3>
-                <p className="mt-2 text-sm font-medium leading-relaxed text-ink/75">
-                  {item.blurb}
-                </p>
-              </div>
-            </article>
-          ))}
+        <div className="mt-14">
+          <FeaturedSlider items={featured} />
         </div>
       </div>
     </section>

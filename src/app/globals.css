@@ -104,3 +104,12 @@ body {
   text-decoration-thickness: 2px;
   text-underline-offset: 8px;
 }
+
+/* Hide horizontal scrollbar for slider */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
