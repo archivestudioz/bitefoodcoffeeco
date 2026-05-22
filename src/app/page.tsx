@@ -49,33 +49,6 @@ const featured = [
   },
 ];
 
-const explore = [
-  {
-    title: "our story",
-    line: "fresh food, no shortcuts. here's the why.",
-    cta: "read it",
-    href: "/story",
-    bg: "bg-pink",
-    rotate: "md:-rotate-1",
-  },
-  {
-    title: "two locations",
-    line: "hackensack + fair lawn. open daily till 8pm.",
-    cta: "get directions",
-    href: "/locations",
-    bg: "bg-pink",
-    rotate: "md:rotate-1",
-  },
-  {
-    title: "catering",
-    line: "feeding a crowd? we got you.",
-    cta: "plan an event",
-    href: "mailto:info@bitefoodcoffee.com?subject=Catering%20inquiry",
-    bg: "bg-pink",
-    rotate: "md:-rotate-1",
-  },
-];
-
 const reviews = [
   {
     name: "Michelle D.",
@@ -165,7 +138,6 @@ export default function Home() {
         <Marquee />
         <Featured />
         <PolaroidWall />
-        <Explore />
         <Reviews />
       </main>
       <Footer />
@@ -398,48 +370,6 @@ function PolaroidWall() {
                 </span>
               </figcaption>
             </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Explore() {
-  return (
-    <section className="border-b-2 border-ink bg-cream">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
-              more from bite ✦
-            </span>
-            <h2 className="mt-5 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
-              keep exploring.
-            </h2>
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-7 md:grid-cols-3">
-          {explore.map((card) => (
-            <Link
-              key={card.title}
-              href={card.href}
-              className={`lift group flex flex-col rounded-[28px] border-2 border-ink p-7 shadow-bold ${card.bg} ${card.rotate}`}
-            >
-              <h3 className="font-display text-4xl leading-none">
-                {card.title}
-              </h3>
-              <p className="mt-3 text-base font-medium text-ink/75">
-                {card.line}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-1 text-sm font-bold uppercase tracking-widest">
-                {card.cta}
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </span>
-            </Link>
           ))}
         </div>
       </div>
