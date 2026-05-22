@@ -73,6 +73,9 @@ const reviews = [
     order: "2384",
     when: "WED 8:42 AM",
     tip: "ALL VIBES",
+    edge: 0,
+    crease: false,
+    fade: false,
   },
   {
     name: "Darren W.",
@@ -82,6 +85,9 @@ const reviews = [
     order: "1907",
     when: "SAT 10:15 AM",
     tip: "10/10",
+    edge: 2,
+    crease: true,
+    fade: false,
   },
   {
     name: "Max E.",
@@ -91,6 +97,9 @@ const reviews = [
     order: "0712",
     when: "FRI 12:30 PM",
     tip: "REGULAR",
+    edge: 3,
+    crease: false,
+    fade: true,
   },
   {
     name: "Tasha K.",
@@ -100,6 +109,9 @@ const reviews = [
     order: "3551",
     when: "THU 3:08 PM",
     tip: "ICED ❄",
+    edge: 1,
+    crease: false,
+    fade: false,
   },
   {
     name: "Jay R.",
@@ -109,11 +121,23 @@ const reviews = [
     order: "4429",
     when: "MON 9:21 AM",
     tip: "HOT HONEY",
+    edge: 0,
+    crease: true,
+    fade: false,
   },
 ];
 
-const RECEIPT_CLIP =
-  "polygon(0 8px, 5% 0, 10% 8px, 15% 0, 20% 8px, 25% 0, 30% 8px, 35% 0, 40% 8px, 45% 0, 50% 8px, 55% 0, 60% 8px, 65% 0, 70% 8px, 75% 0, 80% 8px, 85% 0, 90% 8px, 95% 0, 100% 8px, 100% calc(100% - 8px), 95% 100%, 90% calc(100% - 8px), 85% 100%, 80% calc(100% - 8px), 75% 100%, 70% calc(100% - 8px), 65% 100%, 60% calc(100% - 8px), 55% 100%, 50% calc(100% - 8px), 45% 100%, 40% calc(100% - 8px), 35% 100%, 30% calc(100% - 8px), 25% 100%, 20% calc(100% - 8px), 15% 100%, 10% calc(100% - 8px), 5% 100%, 0 calc(100% - 8px))";
+// Four edge variants — index referenced via review.edge
+const RECEIPT_EDGES = [
+  // 0: clean zigzag both ends
+  "polygon(0 8px, 5% 0, 10% 8px, 15% 0, 20% 8px, 25% 0, 30% 8px, 35% 0, 40% 8px, 45% 0, 50% 8px, 55% 0, 60% 8px, 65% 0, 70% 8px, 75% 0, 80% 8px, 85% 0, 90% 8px, 95% 0, 100% 8px, 100% calc(100% - 8px), 95% 100%, 90% calc(100% - 8px), 85% 100%, 80% calc(100% - 8px), 75% 100%, 70% calc(100% - 8px), 65% 100%, 60% calc(100% - 8px), 55% 100%, 50% calc(100% - 8px), 45% 100%, 40% calc(100% - 8px), 35% 100%, 30% calc(100% - 8px), 25% 100%, 20% calc(100% - 8px), 15% 100%, 10% calc(100% - 8px), 5% 100%, 0 calc(100% - 8px))",
+  // 1: ripped top, zigzag bottom
+  "polygon(0 4px, 3% 9px, 7% 1px, 11% 7px, 15% 3px, 20% 10px, 25% 2px, 30% 8px, 35% 4px, 40% 11px, 45% 1px, 50% 7px, 55% 3px, 60% 10px, 65% 5px, 70% 1px, 75% 9px, 80% 3px, 85% 7px, 90% 2px, 95% 8px, 100% 4px, 100% calc(100% - 8px), 95% 100%, 90% calc(100% - 8px), 85% 100%, 80% calc(100% - 8px), 75% 100%, 70% calc(100% - 8px), 65% 100%, 60% calc(100% - 8px), 55% 100%, 50% calc(100% - 8px), 45% 100%, 40% calc(100% - 8px), 35% 100%, 30% calc(100% - 8px), 25% 100%, 20% calc(100% - 8px), 15% 100%, 10% calc(100% - 8px), 5% 100%, 0 calc(100% - 8px))",
+  // 2: zigzag top, ripped bottom
+  "polygon(0 8px, 5% 0, 10% 8px, 15% 0, 20% 8px, 25% 0, 30% 8px, 35% 0, 40% 8px, 45% 0, 50% 8px, 55% 0, 60% 8px, 65% 0, 70% 8px, 75% 0, 80% 8px, 85% 0, 90% 8px, 95% 0, 100% 8px, 100% calc(100% - 4px), 95% calc(100% - 11px), 91% calc(100% - 2px), 86% calc(100% - 8px), 82% calc(100% - 3px), 77% calc(100% - 10px), 72% calc(100% - 1px), 67% calc(100% - 7px), 62% calc(100% - 11px), 57% calc(100% - 3px), 52% calc(100% - 8px), 47% calc(100% - 2px), 42% calc(100% - 9px), 37% calc(100% - 5px), 32% calc(100% - 11px), 27% calc(100% - 2px), 22% calc(100% - 7px), 17% calc(100% - 4px), 12% calc(100% - 9px), 7% calc(100% - 1px), 3% calc(100% - 5px), 0 calc(100% - 4px))",
+  // 3: ripped both ends
+  "polygon(0 5px, 3% 11px, 7% 2px, 11% 9px, 16% 4px, 21% 10px, 26% 1px, 31% 8px, 36% 11px, 41% 3px, 46% 7px, 51% 2px, 56% 10px, 61% 5px, 66% 1px, 71% 9px, 76% 4px, 81% 11px, 86% 2px, 91% 8px, 96% 3px, 100% 5px, 100% calc(100% - 4px), 95% calc(100% - 10px), 91% calc(100% - 2px), 86% calc(100% - 8px), 82% calc(100% - 4px), 77% calc(100% - 11px), 72% calc(100% - 1px), 67% calc(100% - 7px), 62% calc(100% - 10px), 57% calc(100% - 3px), 52% calc(100% - 9px), 47% calc(100% - 2px), 42% calc(100% - 8px), 37% calc(100% - 5px), 32% calc(100% - 11px), 27% calc(100% - 2px), 22% calc(100% - 6px), 17% calc(100% - 4px), 12% calc(100% - 10px), 7% calc(100% - 1px), 3% calc(100% - 5px), 0 calc(100% - 4px))",
+];
 
 const marqueeBits = [
   "halal kitchen",
@@ -380,14 +404,24 @@ function Reviews() {
           {doubled.map((r, i) => (
             <figure
               key={i}
-              className={`relative flex w-[280px] shrink-0 flex-col bg-cream text-ink transition-transform duration-300 ease-out hover:scale-[1.05] hover:z-10 sm:w-[320px] ${r.rotate}`}
+              className={`receipt-paper relative flex w-[280px] shrink-0 flex-col text-ink transition-transform duration-300 ease-out hover:scale-[1.05] hover:z-10 sm:w-[320px] ${r.rotate}`}
               style={{
-                clipPath: RECEIPT_CLIP,
-                filter: "drop-shadow(5px 5px 0 #0a0a0a)",
+                clipPath: RECEIPT_EDGES[r.edge],
+                filter: "drop-shadow(4px 5px 0 rgba(10,10,10,0.85))",
+                opacity: r.fade ? 0.94 : 1,
               }}
             >
+              {/* Optional fold/crease shadow */}
+              {r.crease && (
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-x-0 top-[42%] h-px bg-ink/30"
+                  style={{ boxShadow: "0 -1px 0 rgba(10,10,10,0.06)" }}
+                />
+              )}
+
               {/* Header */}
-              <div className="px-6 pt-7 text-center font-mono text-[11px] uppercase leading-snug tracking-wider">
+              <div className="px-6 pt-8 text-center font-mono text-[11px] uppercase leading-snug tracking-wider">
                 <p className="font-bold">BITE FOOD &amp; COFFEE CO.</p>
                 <p className="mt-0.5 text-ink/70">360 Essex St · Hackensack, NJ</p>
                 <p className="mt-0.5 text-ink/70">(201) 560-2269</p>
@@ -403,7 +437,10 @@ function Reviews() {
               <ReceiptDivider />
 
               {/* Stars */}
-              <div className="flex justify-center gap-1.5 px-6 text-pink" aria-label="5 stars">
+              <div
+                className="flex justify-center gap-1.5 px-6 text-pink"
+                aria-label="5 stars"
+              >
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star key={j} />
                 ))}
@@ -430,8 +467,11 @@ function Reviews() {
 
               <ReceiptDivider />
 
+              {/* Barcode */}
+              <Barcode seed={r.order} />
+
               {/* Footer */}
-              <div className="px-6 pb-7 text-center font-mono text-[10px] uppercase tracking-widest">
+              <div className="px-6 pb-8 pt-3 text-center font-mono text-[10px] uppercase tracking-widest">
                 <p className="font-bold">thank you ✦ come back</p>
                 <p className="mt-1 text-ink/70">@bitefoodcoffeeco</p>
               </div>
@@ -451,6 +491,34 @@ function ReceiptDivider({ dashed = false }: { dashed?: boolean }) {
       }`}
       aria-hidden="true"
     />
+  );
+}
+
+function Barcode({ seed }: { seed: string }) {
+  // Deterministic per-receipt: produce a sequence of bar widths from the order #
+  const chars = seed.padEnd(32, "0").split("");
+  return (
+    <div
+      aria-hidden="true"
+      className="mx-6 mt-1 flex h-7 items-end justify-center gap-px"
+    >
+      {chars.map((c, i) => {
+        const n = (parseInt(c, 10) || 0) + (i % 3);
+        const width = n % 3 === 0 ? 1 : n % 3 === 1 ? 2 : 3;
+        const tall = n % 5 === 0;
+        return (
+          <span
+            key={i}
+            className="bg-ink"
+            style={{
+              width,
+              height: tall ? "100%" : "85%",
+              opacity: 0.85,
+            }}
+          />
+        );
+      })}
+    </div>
   );
 }
 
