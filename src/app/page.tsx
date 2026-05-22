@@ -6,37 +6,43 @@ const ORDER_URL = "https://bitefoodcoffee.com/order";
 const featured = [
   {
     name: "Chicken & Waffles",
-    blurb: "Buttermilk waffle, crispy boneless chicken, hot honey.",
+    blurb: "Buttermilk waffle, crispy chicken, hot honey.",
+    tag: "fan fave",
     image:
       "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Crème Brûlée Waffle",
-    blurb: "Torched sugar crust, vanilla custard, fresh berries.",
+    blurb: "Torched sugar crust, vanilla custard, berries.",
+    tag: "famous",
     image:
       "https://images.unsplash.com/photo-1565299543923-37dd37887442?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Griddle Brekkie Platter",
-    blurb: "Eggs your way, pancakes, smoked turkey, hash.",
+    name: "Griddle Brekkie",
+    blurb: "Eggs, pancakes, smoked turkey, hash.",
+    tag: "huge",
     image:
       "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "Steak & Eggs",
-    blurb: "Marinated skirt steak, two eggs, chimichurri, potatoes.",
+    blurb: "Marinated skirt steak, two eggs, chimichurri.",
+    tag: "iconic",
     image:
       "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Crispy Chicken Sandwich",
+    name: "Crispy Chicken Sammie",
     blurb: "Buttermilk chicken, pickles, slaw, brioche.",
+    tag: "crispy",
     image:
       "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=1200&q=80",
   },
   {
     name: "The Mediterranean",
-    blurb: "Za'atar eggs, labneh, olives, tomato, warm pita.",
+    blurb: "Za'atar eggs, labneh, olives, warm pita.",
+    tag: "vibey",
     image:
       "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80",
   },
@@ -47,15 +53,17 @@ const locations = [
     city: "Hackensack",
     address: "360 Essex St, Hackensack, NJ 07601",
     phone: "(201) 560-2269",
-    hours: "Open daily · 8:00 AM – 8:00 PM",
+    hours: "Daily · 8AM – 8PM",
     mapUrl: "https://maps.google.com/?q=360+Essex+St,+Hackensack,+NJ+07601",
+    color: "bg-lime",
   },
   {
     city: "Fair Lawn",
     address: "2140 Promenade Blvd, Fair Lawn, NJ 07410",
     phone: "(551) 224-8072",
-    hours: "Open daily · 9:00 AM – 8:00 PM",
+    hours: "Daily · 9AM – 8PM",
     mapUrl: "https://maps.google.com/?q=2140+Promenade+Blvd,+Fair+Lawn,+NJ+07410",
+    color: "bg-cream",
   },
 ];
 
@@ -63,18 +71,35 @@ const reviews = [
   {
     name: "Michelle D.",
     quote:
-      "The chicken and waffles are unreal. Service is warm, the space is gorgeous, and you can tell everything is made with care.",
+      "The chicken & waffles are UNREAL. Service is warm, the space is gorgeous, you can taste the love.",
+    rotate: "-rotate-2",
+    bg: "bg-cream",
   },
   {
     name: "Darren W.",
     quote:
-      "Best breakfast in Bergen County. The crème brûlée waffle alone is worth the trip — and the matcha is the real deal.",
+      "Best breakfast in Bergen County. The crème brûlée waffle alone is worth the trip. Matcha = perfect.",
+    rotate: "rotate-1",
+    bg: "bg-lime",
   },
   {
     name: "Max E.",
     quote:
-      "Halal kitchen, huge portions, killer coffee. We're regulars now. The steak & eggs never miss.",
+      "Halal, huge portions, killer coffee. We're regulars now. Steak & eggs never miss.",
+    rotate: "-rotate-1",
+    bg: "bg-pink-soft",
   },
+];
+
+const marqueeBits = [
+  "halal kitchen",
+  "matcha freaks welcome",
+  "all-day brunch",
+  "pancakes at 7pm? yes",
+  "two NJ kitchens",
+  "made fresh daily",
+  "iced everything",
+  "big portions",
 ];
 
 export default function Home() {
@@ -83,6 +108,7 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
+        <Marquee />
         <Featured />
         <Story />
         <Locations />
@@ -96,22 +122,25 @@ export default function Home() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-cream/85 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="font-display text-xl font-semibold tracking-tight">
-          Bite<span className="text-accent">.</span>
+    <header className="sticky top-0 z-40 border-b-2 border-ink bg-pink">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <Link
+          href="/"
+          className="font-display text-3xl leading-none tracking-tight"
+        >
+          bite<span className="text-pink-deep">.</span>
         </Link>
-        <nav className="hidden items-center gap-8 text-sm font-medium md:flex">
-          <Link href="#menu" className="hover:text-accent">Menu</Link>
-          <Link href="#story" className="hover:text-accent">Our Story</Link>
-          <Link href="#locations" className="hover:text-accent">Locations</Link>
-          <Link href="#catering" className="hover:text-accent">Catering</Link>
+        <nav className="hidden items-center gap-7 text-sm font-semibold uppercase tracking-wider md:flex">
+          <Link href="#menu" className="hover:underline">Menu</Link>
+          <Link href="#story" className="hover:underline">Story</Link>
+          <Link href="#locations" className="hover:underline">Locations</Link>
+          <Link href="#catering" className="hover:underline">Catering</Link>
         </nav>
         <a
           href={ORDER_URL}
-          className="inline-flex h-10 items-center rounded-full bg-espresso px-5 text-sm font-medium text-cream transition hover:bg-espresso-soft"
+          className="inline-flex h-11 items-center rounded-full border-2 border-ink bg-ink px-5 text-sm font-bold uppercase tracking-wider text-pink transition hover:bg-pink hover:text-ink"
         >
-          Order online
+          Order →
         </a>
       </div>
     </header>
@@ -120,45 +149,93 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 lg:py-28">
-        <div className="relative z-10">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-cream-deep/60 px-3 py-1 text-xs font-medium uppercase tracking-wider text-espresso-soft">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-            100% Halal · Hackensack & Fair Lawn
+    <section className="relative overflow-hidden bg-pink">
+      {/* big decorative asterisks */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-8 top-10 font-display text-[220px] leading-none text-pink-deep/30 select-none rotate-12"
+      >
+        ✺
+      </span>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -left-6 bottom-10 font-display text-[140px] leading-none text-ink/10 select-none -rotate-12"
+      >
+        ✺
+      </span>
+
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-12 md:items-center md:py-24 lg:py-28">
+        <div className="relative z-10 md:col-span-7">
+          <span className="inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            <span className="h-2 w-2 rounded-full bg-pink-deep" />
+            100% halal · NJ
           </span>
-          <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-            Best breakfast in New Jersey.
+
+          <h1 className="mt-6 font-display text-[64px] leading-[0.95] tracking-tight sm:text-[88px] lg:text-[120px]">
+            best
+            <br />
+            breakfast
+            <br />
+            <span className="squiggle decoration-pink-deep">in jersey.</span>
           </h1>
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-espresso-soft">
-            Brunch, dinner, and everything in between. Bold flavors, fresh
-            ingredients, made-to-order — all day long.
+
+          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink-soft">
+            Brunch. Dinner. Matcha. Pancakes at 7pm.
+            <br />
+            Made fresh, made halal, made for you.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+
+          <div className="mt-8 flex flex-wrap gap-4">
             <a
               href={ORDER_URL}
-              className="inline-flex h-12 items-center rounded-full bg-espresso px-7 text-sm font-medium text-cream transition hover:bg-espresso-soft"
+              className="inline-flex h-14 items-center rounded-full border-2 border-ink bg-ink px-8 text-sm font-bold uppercase tracking-widest text-pink shadow-bold transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
             >
-              Order online
+              Order online →
             </a>
             <Link
               href="#menu"
-              className="inline-flex h-12 items-center rounded-full border border-espresso/15 px-7 text-sm font-medium text-espresso transition hover:bg-espresso/5"
+              className="inline-flex h-14 items-center rounded-full border-2 border-ink bg-cream px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
             >
-              See the menu
+              see the menu
             </Link>
           </div>
         </div>
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-cream-deep md:aspect-square">
-          <Image
-            src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1600&q=80"
-            alt="Plate of chicken and waffles with hot honey"
-            fill
-            priority
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="object-cover"
-          />
+
+        <div className="relative md:col-span-5">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
+            <Image
+              src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1600&q=80"
+              alt="Plate of chicken and waffles"
+              fill
+              priority
+              sizes="(min-width: 768px) 40vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          {/* sticker overlay */}
+          <div className="absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-lime px-4 py-2 font-display text-2xl shadow-bold-sm sm:-bottom-6 sm:-left-6">
+            yum*
+          </div>
+          <div className="absolute -top-3 -right-3 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm">
+            new menu ✦
+          </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function Marquee() {
+  const doubled = [...marqueeBits, ...marqueeBits];
+  return (
+    <section className="border-y-2 border-ink bg-ink py-4 text-pink overflow-hidden">
+      <div className="flex animate-marquee gap-10 whitespace-nowrap font-display text-3xl sm:text-4xl">
+        {doubled.map((bit, i) => (
+          <span key={i} className="flex items-center gap-10">
+            <span>{bit}</span>
+            <span aria-hidden className="text-lime">✺</span>
+          </span>
+        ))}
       </div>
     </section>
   );
@@ -166,43 +243,52 @@ function Hero() {
 
 function Featured() {
   return (
-    <section id="menu" className="border-t border-border/60 bg-cream-deep/40">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-24">
+    <section id="menu" className="border-b-2 border-ink bg-cream">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="text-sm font-medium uppercase tracking-wider text-accent">
-              The hits
-            </p>
-            <h2 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-              The food everyone&apos;s talking about.
+            <span className="inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+              the hits ✦
+            </span>
+            <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+              food
+              <br />
+              <span className="text-pink-deep">people scream</span>
+              <br />
+              about.
             </h2>
           </div>
           <a
             href={ORDER_URL}
-            className="text-sm font-medium text-espresso underline-offset-4 hover:underline"
+            className="inline-flex h-12 items-center rounded-full border-2 border-ink bg-ink px-6 text-sm font-bold uppercase tracking-widest text-pink shadow-bold-sm transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
           >
-            Explore the full menu →
+            see the whole menu →
           </a>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((item) => (
+        <div className="mt-14 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((item, i) => (
             <article
               key={item.name}
-              className="group overflow-hidden rounded-2xl bg-cream shadow-sm ring-1 ring-border/60 transition hover:shadow-md"
+              className={`relative overflow-hidden rounded-[28px] border-2 border-ink bg-pink-soft shadow-bold transition hover:-translate-y-1 ${
+                i % 2 === 0 ? "sm:rotate-[-1deg]" : "sm:rotate-[1deg]"
+              }`}
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden border-b-2 border-ink">
                 <Image
                   src={item.image}
                   alt={item.name}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition duration-500 group-hover:scale-105"
+                  className="object-cover"
                 />
+                <span className="absolute left-3 top-3 rotate-[-6deg] rounded-full border-2 border-ink bg-lime px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+                  {item.tag}
+                </span>
               </div>
-              <div className="p-5">
-                <h3 className="font-display text-xl font-semibold">{item.name}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-espresso-soft">
+              <div className="p-6">
+                <h3 className="font-display text-3xl leading-none">{item.name}</h3>
+                <p className="mt-2 text-sm font-medium leading-relaxed text-ink-soft">
                   {item.blurb}
                 </p>
               </div>
@@ -216,46 +302,56 @@ function Featured() {
 
 function Story() {
   return (
-    <section id="story" className="border-t border-border/60">
-      <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-12 md:items-center lg:py-24">
+    <section id="story" className="relative border-b-2 border-ink bg-pink">
+      <div className="mx-auto grid max-w-7xl gap-14 px-4 py-20 sm:px-6 md:grid-cols-12 md:items-center lg:py-28">
         <div className="md:col-span-5">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-cream-deep">
-            <Image
-              src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80"
-              alt="Barista pulling an espresso shot"
-              fill
-              sizes="(min-width: 768px) 40vw, 100vw"
-              className="object-cover"
-            />
+          <div className="relative">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
+              <Image
+                src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=80"
+                alt="Barista pulling an espresso shot"
+                fill
+                sizes="(min-width: 768px) 40vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-5 -right-5 rotate-[8deg] rounded-2xl border-2 border-ink bg-lime px-4 py-2 font-display text-2xl shadow-bold-sm">
+              hi we're bite ✦
+            </div>
           </div>
         </div>
         <div className="md:col-span-7">
-          <p className="text-sm font-medium uppercase tracking-wider text-accent">
-            Our story
-          </p>
-          <h2 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            Fresh food, friendly people, a place to slow down.
+          <span className="inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-cream px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            our story
+          </span>
+          <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+            fresh food.<br />
+            <span className="text-pink-deep">good vibes.</span><br />
+            no shortcuts.
           </h2>
-          <p className="mt-5 text-lg leading-relaxed text-espresso-soft">
-            We serve classic American dishes made every day, right here in our
-            kitchen. Bold espresso, vibrant matcha, house-made syrups, and a
-            spirit-free cocktail menu that&apos;s anything but boring.
+          <p className="mt-6 max-w-xl text-lg font-medium leading-relaxed text-ink-soft">
+            Classic American dishes made every day, right here in our kitchen.
+            Bold espresso, vibrant matcha, house-made syrups, and a spirit-free
+            cocktail menu that&apos;s anything but boring.
           </p>
 
-          <dl className="mt-8 grid gap-6 sm:grid-cols-3">
+          <div className="mt-10 grid gap-4 sm:grid-cols-3">
             {[
-              { k: "100% Halal", v: "Every dish, every time — prep to plate." },
-              { k: "Made daily", v: "No shortcuts, no day-old anything." },
-              { k: "All-day brunch", v: "Pancakes at 7. Steak at 7." },
-            ].map((f) => (
-              <div key={f.k}>
-                <dt className="font-display text-lg font-semibold">{f.k}</dt>
-                <dd className="mt-1 text-sm leading-relaxed text-espresso-soft">
-                  {f.v}
-                </dd>
+              { k: "100% halal", v: "every dish, every time" },
+              { k: "made daily", v: "no day-old anything" },
+              { k: "all-day brunch", v: "pancakes at 7. steak at 7." },
+            ].map((f, i) => (
+              <div
+                key={f.k}
+                className={`rounded-2xl border-2 border-ink bg-cream p-5 shadow-bold-sm ${
+                  i === 1 ? "rotate-[1.5deg]" : i === 0 ? "rotate-[-1.5deg]" : "rotate-[0.5deg]"
+                }`}
+              >
+                <p className="font-display text-2xl leading-none">{f.k}</p>
+                <p className="mt-2 text-sm font-medium text-ink-soft">{f.v}</p>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
       </div>
     </section>
@@ -264,45 +360,48 @@ function Story() {
 
 function Locations() {
   return (
-    <section id="locations" className="border-t border-border/60 bg-espresso text-cream">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-24">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-accent">
-            Visit us
-          </p>
-          <h2 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            Two New Jersey kitchens. Same hospitality.
+    <section id="locations" className="border-b-2 border-ink bg-ink text-pink">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
+        <div className="max-w-3xl">
+          <span className="inline-block rotate-[-2deg] rounded-full border-2 border-pink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest text-ink shadow-bold-sm">
+            visit us
+          </span>
+          <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+            two NJ kitchens.<br />
+            <span className="text-lime">same vibe.</span>
           </h2>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {locations.map((loc) => (
+        <div className="mt-14 grid gap-8 md:grid-cols-2">
+          {locations.map((loc, i) => (
             <div
               key={loc.city}
-              className="rounded-2xl bg-cream/5 p-8 ring-1 ring-cream/10 backdrop-blur"
+              className={`relative rounded-[32px] border-2 border-pink p-8 text-ink shadow-bold-pink ${loc.color} ${
+                i === 0 ? "md:rotate-[-1deg]" : "md:rotate-[1deg]"
+              }`}
             >
-              <h3 className="font-display text-3xl font-semibold">{loc.city}</h3>
-              <p className="mt-3 text-cream/80">{loc.address}</p>
-              <p className="mt-1 text-cream/80">{loc.hours}</p>
-              <p className="mt-1 text-cream/80">
-                <a href={`tel:${loc.phone.replace(/\D/g, "")}`} className="hover:text-accent">
+              <h3 className="font-display text-5xl leading-none">{loc.city.toLowerCase()}.</h3>
+              <p className="mt-5 font-medium">{loc.address}</p>
+              <p className="mt-1 font-medium">{loc.hours}</p>
+              <p className="mt-1 font-medium">
+                <a href={`tel:${loc.phone.replace(/\D/g, "")}`} className="hover:underline">
                   {loc.phone}
                 </a>
               </p>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   href={loc.mapUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex h-10 items-center rounded-full bg-cream px-5 text-sm font-medium text-espresso transition hover:bg-cream-deep"
+                  className="inline-flex h-11 items-center rounded-full border-2 border-ink bg-ink px-5 text-xs font-bold uppercase tracking-widest text-pink transition hover:bg-pink hover:text-ink"
                 >
-                  Get directions
+                  directions →
                 </a>
                 <a
                   href={ORDER_URL}
-                  className="inline-flex h-10 items-center rounded-full border border-cream/25 px-5 text-sm font-medium text-cream transition hover:bg-cream/10"
+                  className="inline-flex h-11 items-center rounded-full border-2 border-ink bg-cream px-5 text-xs font-bold uppercase tracking-widest text-ink transition hover:bg-pink"
                 >
-                  Order from {loc.city}
+                  order from {loc.city.toLowerCase()}
                 </a>
               </div>
             </div>
@@ -315,25 +414,32 @@ function Locations() {
 
 function Catering() {
   return (
-    <section id="catering" className="border-t border-border/60">
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-center md:justify-between lg:py-24">
-        <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-accent">
-            Catering
-          </p>
-          <h2 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            Got a big group to feed?
+    <section id="catering" className="relative border-b-2 border-ink bg-lime overflow-hidden">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-10 -top-10 font-display text-[260px] leading-none text-ink/10 select-none rotate-12"
+      >
+        ✺
+      </span>
+      <div className="mx-auto flex max-w-7xl flex-col items-start gap-10 px-4 py-20 sm:px-6 md:flex-row md:items-center md:justify-between lg:py-28">
+        <div className="relative max-w-2xl">
+          <span className="inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            catering ✦
+          </span>
+          <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+            feeding<br />
+            a crowd?
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-espresso-soft">
-            Family gatherings, office breakfasts, weekend celebrations — we
-            cook for the room and we make it easy.
+          <p className="mt-6 text-lg font-medium leading-relaxed text-ink-soft">
+            Office breakfasts, family gatherings, weekend celebrations — we cook
+            for the room and we make it easy.
           </p>
         </div>
         <a
           href="mailto:info@bitefoodcoffee.com?subject=Catering%20inquiry"
-          className="inline-flex h-12 items-center rounded-full bg-accent px-7 text-sm font-medium text-cream transition hover:bg-accent-deep"
+          className="relative z-10 inline-flex h-16 items-center rounded-full border-2 border-ink bg-ink px-10 font-display text-2xl text-pink shadow-bold transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
         >
-          Plan your event
+          plan your event →
         </a>
       </div>
     </section>
@@ -342,33 +448,36 @@ function Catering() {
 
 function Reviews() {
   return (
-    <section className="border-t border-border/60 bg-cream-deep/40">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:py-24">
+    <section className="border-b-2 border-ink bg-pink-soft">
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-accent">
-            Loved by regulars
-          </p>
-          <h2 className="mt-2 font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            What our guests are saying.
+          <span className="inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            loved by regulars
+          </span>
+          <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+            people<br />
+            <span className="text-pink-deep">won&apos;t shut up</span>
+            <br />
+            about it.
           </h2>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-14 grid gap-8 md:grid-cols-3">
           {reviews.map((r) => (
             <figure
               key={r.name}
-              className="flex h-full flex-col rounded-2xl bg-cream p-7 ring-1 ring-border/60"
+              className={`flex h-full flex-col rounded-[28px] border-2 border-ink p-7 shadow-bold ${r.bg} ${r.rotate}`}
             >
-              <div className="flex gap-1 text-accent" aria-label="5 stars">
+              <div className="flex gap-1 text-pink-deep" aria-label="5 stars">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-base leading-relaxed text-espresso-soft">
+              <blockquote className="mt-4 flex-1 font-display text-xl leading-snug">
                 &ldquo;{r.quote}&rdquo;
               </blockquote>
-              <figcaption className="mt-5 font-display font-semibold">
-                {r.name}
+              <figcaption className="mt-6 text-sm font-bold uppercase tracking-widest">
+                — {r.name}
               </figcaption>
             </figure>
           ))}
@@ -380,57 +489,68 @@ function Reviews() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border/60 bg-espresso text-cream/80">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-4">
-        <div className="md:col-span-2">
-          <Link href="/" className="font-display text-2xl font-semibold text-cream">
-            Bite<span className="text-accent">.</span>
-          </Link>
-          <p className="mt-3 max-w-sm text-sm leading-relaxed">
-            Halal breakfast, brunch & dinner. Made fresh in Hackensack and Fair
-            Lawn, New Jersey.
+    <footer className="bg-ink text-pink">
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6">
+        <div className="grid gap-10 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <Link
+              href="/"
+              className="font-display text-6xl leading-none tracking-tight"
+            >
+              bite<span className="text-lime">.</span>
+            </Link>
+            <p className="mt-4 max-w-sm text-sm font-medium leading-relaxed text-pink/80">
+              Halal breakfast, brunch & dinner. Made fresh in Hackensack and
+              Fair Lawn, NJ. Big flavor, big mood.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-display text-2xl leading-none text-lime">visit</h4>
+            <ul className="mt-4 space-y-2 text-sm font-medium">
+              <li>360 Essex St, Hackensack</li>
+              <li>2140 Promenade Blvd, Fair Lawn</li>
+              <li>
+                <a href="mailto:info@bitefoodcoffee.com" className="hover:text-lime">
+                  info@bitefoodcoffee.com
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-display text-2xl leading-none text-lime">more</h4>
+            <ul className="mt-4 space-y-2 text-sm font-medium">
+              <li>
+                <a href={ORDER_URL} className="hover:text-lime">Order online</a>
+              </li>
+              <li>
+                <a href="#catering" className="hover:text-lime">Catering</a>
+              </li>
+              <li>
+                <a
+                  href="https://instagram.com/bitefoodcoffeeco"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:text-lime"
+                >
+                  Instagram
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* huge watermark */}
+        <div className="mt-16 overflow-hidden">
+          <p className="font-display text-[18vw] leading-[0.85] tracking-tighter text-pink/10 select-none">
+            bite.
           </p>
         </div>
 
-        <div>
-          <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-cream">
-            Visit
-          </h4>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li>360 Essex St, Hackensack</li>
-            <li>2140 Promenade Blvd, Fair Lawn</li>
-            <li>
-              <a href="mailto:info@bitefoodcoffee.com" className="hover:text-accent">
-                info@bitefoodcoffee.com
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-display text-sm font-semibold uppercase tracking-wider text-cream">
-            More
-          </h4>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><a href={ORDER_URL} className="hover:text-accent">Order online</a></li>
-            <li><a href="#catering" className="hover:text-accent">Catering</a></li>
-            <li>
-              <a
-                href="https://instagram.com/bitefoodcoffeeco"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-accent"
-              >
-                Instagram
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-cream/10">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-5 text-xs text-cream/60 sm:px-6">
-          <p>© {new Date().getFullYear()} Bite Food & Coffee Co. All rights reserved.</p>
-          <p>100% Halal · Made in New Jersey</p>
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-3 border-t-2 border-pink/20 pt-6 text-xs font-medium text-pink/70">
+          <p>© {new Date().getFullYear()} Bite Food & Coffee Co. all rights reserved.</p>
+          <p>100% halal · made in NJ ✦</p>
         </div>
       </div>
     </footer>
@@ -440,8 +560,8 @@ function Footer() {
 function Star() {
   return (
     <svg
-      width="14"
-      height="14"
+      width="16"
+      height="16"
       viewBox="0 0 20 20"
       fill="currentColor"
       aria-hidden="true"

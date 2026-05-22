@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Space_Grotesk, Caprasimo } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const fraunces = Fraunces({
+const caprasimo = Caprasimo({
   variable: "--font-display",
   subsets: ["latin"],
-  axes: ["SOFT", "opsz"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "Bite Food & Coffee Co — Best Breakfast in New Jersey",
+  title: "Bite — Halal brunch, dinner & coffee in NJ",
   description:
-    "Halal-certified all-day brunch, dinner, and coffee in Hackensack and Fair Lawn, NJ. Fresh, made-to-order American comfort food.",
+    "Halal-certified all-day brunch, dinner, and coffee in Hackensack and Fair Lawn, NJ. Big flavor, big portions, big mood.",
 };
 
 export default function RootLayout({
@@ -27,9 +27,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${caprasimo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-cream text-espresso">
+      <body className="min-h-full flex flex-col bg-pink text-ink">
         {children}
       </body>
     </html>
