@@ -260,7 +260,7 @@ function Hero() {
             Made fresh, made halal, made for you.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8">
             <a
               href={ORDER_URL}
               className="press inline-flex h-14 items-center rounded-full border-2 border-cream bg-pink px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
@@ -268,13 +268,6 @@ function Hero() {
             >
               Order online →
             </a>
-            <Link
-              href="#menu"
-              className="press inline-flex h-14 items-center rounded-full border-2 border-cream bg-cream px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
-              style={{ boxShadow: "6px 6px 0 0 #ff98cb" }}
-            >
-              see the menu
-            </Link>
           </div>
         </div>
       </div>
