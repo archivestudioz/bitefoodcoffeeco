@@ -425,8 +425,9 @@ function Reviews() {
         </div>
       </div>
 
-      <div className="marquee-container py-14 lg:py-20">
-        <div className="flex animate-marquee-slow gap-8 px-4 sm:px-6">
+      <div className="py-14 lg:py-20">
+        <div className="marquee-container">
+          <div className="flex animate-marquee-slow gap-8 px-4 sm:px-6">
           {doubled.map((r, i) => (
             <figure
               key={i}
@@ -503,6 +504,7 @@ function Reviews() {
               </div>
             </figure>
           ))}
+        </div>
         </div>
       </div>
     </section>
