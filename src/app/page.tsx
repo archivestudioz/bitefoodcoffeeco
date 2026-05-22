@@ -179,6 +179,35 @@ const polaroids = [
     rotate: "rotate-3",
     bg: "bg-cream",
   },
+  // Unsplash placeholders — swap to /photos/wild-5..8.jpg when real photos are saved
+  {
+    src: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+    alt: "Drinks cheers shot",
+    caption: "drinks szn",
+    rotate: "rotate-1",
+    bg: "bg-cream",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1556717272-1bd3acfd2c95?auto=format&fit=crop&w=900&q=80",
+    alt: "Matcha latte poured into a cup",
+    caption: "matcha hour ✦",
+    rotate: "-rotate-2",
+    bg: "bg-cream",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80",
+    alt: "Loaded fries shared",
+    caption: "saturday energy",
+    rotate: "rotate-3",
+    bg: "bg-cream",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+    alt: "Burger close-up at night",
+    caption: "weekend mood",
+    rotate: "-rotate-1",
+    bg: "bg-cream",
+  },
 ];
 
 export default function Home() {
@@ -325,9 +354,10 @@ function Featured() {
 }
 
 function PolaroidWall() {
+  const doubled = [...polaroids, ...polaroids];
   return (
     <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
-      <div className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10 lg:px-12 lg:py-32">
+      <div className="mx-auto max-w-[1600px] px-6 pt-24 sm:px-10 lg:px-12 lg:pt-32">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6 lg:mb-16">
           <div>
             <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-cream px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
@@ -346,19 +376,21 @@ function PolaroidWall() {
             @bitefoodcoffeeco →
           </a>
         </div>
+      </div>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {polaroids.map((p, i) => (
+      <div className="marquee-container pb-24 lg:pb-32">
+        <div className="flex animate-marquee-slow gap-8 px-6 sm:px-10 lg:px-12">
+          {doubled.map((p, i) => (
             <figure
               key={i}
-              className={`lift relative overflow-hidden rounded-2xl border-2 border-ink shadow-bold ${p.bg} ${p.rotate}`}
+              className={`lift relative w-[260px] shrink-0 overflow-hidden rounded-2xl border-2 border-ink shadow-bold sm:w-[300px] lg:w-[340px] ${p.bg} ${p.rotate}`}
             >
               <div className="relative aspect-[3/4] overflow-hidden border-b-2 border-ink">
                 <Image
                   src={p.src}
                   alt={p.alt}
                   fill
-                  sizes="(min-width: 1024px) 24vw, (min-width: 640px) 45vw, 90vw"
+                  sizes="(min-width: 1024px) 340px, (min-width: 640px) 300px, 260px"
                   className="object-cover transition duration-500 hover:scale-105"
                 />
               </div>
