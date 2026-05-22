@@ -174,8 +174,8 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
-      {/* Background video — opacity blends it with the pink section bg */}
+    <section className="relative overflow-hidden border-b-2 border-ink bg-ink text-cream">
+      {/* Background video — bg-ink behind it darkens slightly, no pink tint */}
       <video
         src="/photos/hero.mp4"
         poster="/photos/hero-poster.jpg"
@@ -184,19 +184,19 @@ function Hero() {
         loop
         playsInline
         preload="metadata"
-        className="absolute inset-0 h-full w-full object-cover opacity-30"
+        className="absolute inset-0 h-full w-full object-cover opacity-75"
         aria-hidden="true"
       />
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:py-32">
         <div className="max-w-3xl">
-          <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+          <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-ink shadow-bold-sm">
             <span className="h-2 w-2 rounded-full bg-ink" />
             100% halal · NJ
           </span>
 
-          <h1 className="mt-6 font-display text-[64px] leading-[0.95] tracking-tight sm:text-[88px] lg:text-[112px]">
+          <h1 className="mt-6 font-display text-[64px] leading-[0.95] tracking-tight text-cream sm:text-[88px] lg:text-[112px]">
             best
             <br />
             <RotatingWord />
@@ -204,7 +204,7 @@ function Hero() {
             in jersey.
           </h1>
 
-          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink/80">
+          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-cream/85">
             Brunch. Dinner. Matcha. Pancakes at 7pm.
             <br />
             Made fresh, made halal, made for you.
@@ -213,13 +213,15 @@ function Hero() {
           <div className="mt-8 flex flex-wrap gap-4">
             <a
               href={ORDER_URL}
-              className="press inline-flex h-14 items-center rounded-full border-2 border-ink bg-ink px-8 text-sm font-bold uppercase tracking-widest text-pink shadow-bold"
+              className="press inline-flex h-14 items-center rounded-full border-2 border-cream bg-pink px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
+              style={{ boxShadow: "6px 6px 0 0 #fff5e6" }}
             >
               Order online →
             </a>
             <Link
               href="#menu"
-              className="press inline-flex h-14 items-center rounded-full border-2 border-ink bg-cream px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
+              className="press inline-flex h-14 items-center rounded-full border-2 border-cream bg-cream px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
+              style={{ boxShadow: "6px 6px 0 0 #ff98cb" }}
             >
               see the menu
             </Link>
