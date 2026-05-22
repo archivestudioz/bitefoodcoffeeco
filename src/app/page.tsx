@@ -259,7 +259,7 @@ function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full px-3 py-20 sm:px-5 md:py-24 lg:py-28">
+      <div className="relative z-10 w-full pl-8 pr-3 py-20 sm:pl-14 sm:pr-5 md:py-24 lg:pl-24 lg:py-28">
         <div className="max-w-5xl">
           <h1 className="font-display text-[80px] leading-[0.92] tracking-tight text-cream sm:text-[120px] lg:text-[152px] xl:text-[172px]">
             best
