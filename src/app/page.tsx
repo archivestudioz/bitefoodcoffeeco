@@ -490,45 +490,283 @@ function Reviews() {
   );
 }
 
+const footerNav = {
+  menu: [
+    { label: "Menu", href: "#menu" },
+    { label: "Menu PDF", href: "/menu.pdf" },
+    { label: "Catering", href: "/catering" },
+    { label: "All Day Brunch & Dinner", href: "/brunch-dinner" },
+  ],
+  bite: [
+    { label: "Our Story", href: "/story" },
+    { label: "Events", href: "/events" },
+    { label: "We're Hiring", href: "/careers" },
+    { label: "Gift Cards", href: "/gift-cards" },
+  ],
+  visit: [
+    { label: "Contact", href: "/contact" },
+    { label: "Locations", href: "/locations" },
+    { label: "We are 100% Halal", href: "/halal" },
+    { label: "What Makes Our Breakfast Special", href: "/why-bite" },
+  ],
+};
+
 function Footer() {
   return (
     <footer className="bg-ink text-pink">
-      <div className="mx-auto max-w-7xl px-4 pt-14 pb-8 sm:px-6">
-        <div className="flex flex-wrap items-end justify-between gap-10">
-          <div>
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-8 sm:px-6">
+        <div className="grid gap-12 md:grid-cols-12">
+          {/* Brand */}
+          <div className="md:col-span-3">
             <Link
               href="/"
-              className="font-display text-5xl leading-none tracking-tight"
+              className="font-display text-6xl leading-none tracking-tight"
             >
               bite<span className="text-pink">.</span>
             </Link>
-            <p className="mt-3 max-w-sm text-sm font-medium leading-relaxed text-pink/80">
+            <p className="mt-4 max-w-xs text-sm font-medium leading-relaxed text-pink/80">
               Halal breakfast, brunch & dinner. Hackensack + Fair Lawn, NJ.
             </p>
+
+            {/* Order CTA */}
+            <a
+              href={ORDER_URL}
+              className="press mt-6 inline-flex h-11 items-center rounded-full border-2 border-pink bg-pink px-5 text-sm font-bold uppercase tracking-wider text-ink"
+            >
+              Order online →
+            </a>
+
+            {/* Social */}
+            <div className="mt-7 flex gap-3">
+              <SocialIcon
+                href="https://instagram.com/bitefoodcoffeeco"
+                label="Instagram"
+              >
+                <InstagramIcon />
+              </SocialIcon>
+              <SocialIcon
+                href="https://facebook.com/bitefoodcoffeeco"
+                label="Facebook"
+              >
+                <FacebookIcon />
+              </SocialIcon>
+              <SocialIcon
+                href="https://tiktok.com/@bitefoodcoffeeco"
+                label="TikTok"
+              >
+                <TikTokIcon />
+              </SocialIcon>
+            </div>
           </div>
 
-          <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm font-semibold uppercase tracking-wider">
-            <a href={ORDER_URL} className="hover:text-cream">Order</a>
-            <Link href="/story" className="hover:text-cream">Story</Link>
-            <Link href="/locations" className="hover:text-cream">Locations</Link>
-            <Link href="/catering" className="hover:text-cream">Catering</Link>
-            <a
-              href="https://instagram.com/bitefoodcoffeeco"
-              target="_blank"
-              rel="noreferrer"
-              className="hover:text-cream"
-            >
-              Instagram
-            </a>
-          </nav>
+          {/* Menu column */}
+          <FooterColumn title="menu" items={footerNav.menu} />
+
+          {/* Bite column */}
+          <FooterColumn title="bite" items={footerNav.bite} />
+
+          {/* Visit column */}
+          <div className="md:col-span-3">
+            <h4 className="font-display text-2xl leading-none">visit</h4>
+            <ul className="mt-5 space-y-2.5 text-sm font-medium">
+              {footerNav.visit.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-pink/85 transition hover:text-cream"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* App download */}
+          <div className="md:col-span-2">
+            <h4 className="font-display text-2xl leading-none">app</h4>
+            <p className="mt-4 text-sm font-medium text-pink/85">
+              Scan to download our app
+            </p>
+            <div className="mt-4 inline-block rounded-2xl border-2 border-pink/30 bg-cream p-3">
+              <QrPlaceholder />
+            </div>
+            <p className="mt-3 text-xs font-medium uppercase tracking-widest text-pink/70">
+              Earn points for free food ✦
+            </p>
+            <div className="mt-4 flex flex-col gap-2">
+              <AppBadge platform="apple" />
+              <AppBadge platform="google" />
+            </div>
+          </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t-2 border-pink/20 pt-5 text-xs font-medium text-pink/70">
-          <p>© {new Date().getFullYear()} Bite Food & Coffee Co.</p>
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t-2 border-pink/20 pt-6 text-xs font-medium text-pink/70">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <p>© {new Date().getFullYear()} Bite Food & Coffee Co.</p>
+            <Link href="/terms" className="hover:text-cream">
+              Terms of service
+            </Link>
+            <Link href="/accessibility" className="hover:text-cream">
+              Accessibility
+            </Link>
+          </div>
           <p>100% halal · made in NJ ✦</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({
+  title,
+  items,
+}: {
+  title: string;
+  items: { label: string; href: string }[];
+}) {
+  return (
+    <div className="md:col-span-2">
+      <h4 className="font-display text-2xl leading-none">{title}</h4>
+      <ul className="mt-5 space-y-2.5 text-sm font-medium">
+        {items.map((item) => (
+          <li key={item.label}>
+            <Link
+              href={item.href}
+              className="text-pink/85 transition hover:text-cream"
+            >
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SocialIcon({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-pink/40 text-pink transition hover:border-pink hover:bg-pink hover:text-ink"
+    >
+      {children}
+    </a>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+      <path d="M13 3h4v4h-3c-.55 0-1 .45-1 1v3h4l-.5 4H13v6h-4v-6H6v-4h3V8a5 5 0 0 1 5-5z" />
+    </svg>
+  );
+}
+
+function TikTokIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+      <path d="M19.6 6.7a4.8 4.8 0 0 1-3.8-4.2V2h-3.4v13.7a2.9 2.9 0 0 1-5.2 1.7 2.9 2.9 0 0 1 2.3-4.6c.3 0 .6 0 .9.1V9.4a6.7 6.7 0 0 0-1-.1 6.3 6.3 0 0 0-3.6 11.5 6.3 6.3 0 0 0 10.5-4.7v-7a8.2 8.2 0 0 0 4.8 1.5V7.3a4.9 4.9 0 0 1-1.5-.6z" />
+    </svg>
+  );
+}
+
+function QrPlaceholder() {
+  // Stylised QR-ish square using a 7x7 grid of cells in ink.
+  // Real QR can be dropped in as an <Image src="/photos/app-qr.png" /> later.
+  const pattern = [
+    [1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 1, 1, 0, 1],
+    [1, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1],
+  ];
+  return (
+    <div
+      className="grid h-24 w-24 gap-[2px]"
+      style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
+      aria-label="App QR code"
+      role="img"
+    >
+      {pattern.flatMap((row, y) =>
+        row.map((cell, x) => (
+          <span
+            key={`${x}-${y}`}
+            className={cell ? "bg-ink" : "bg-cream"}
+            aria-hidden="true"
+          />
+        ))
+      )}
+    </div>
+  );
+}
+
+function AppBadge({ platform }: { platform: "apple" | "google" }) {
+  const small = platform === "apple" ? "Download on the" : "Get it on";
+  const big = platform === "apple" ? "App Store" : "Google Play";
+  return (
+    <a
+      href="#"
+      className="press flex items-center gap-2 rounded-lg border-2 border-pink/40 px-3 py-1.5 transition hover:border-pink hover:bg-pink hover:text-ink"
+    >
+      {platform === "apple" ? <AppleIcon /> : <GooglePlayIcon />}
+      <div className="text-left leading-tight">
+        <div className="text-[9px] uppercase tracking-widest opacity-80">
+          {small}
+        </div>
+        <div className="text-sm font-bold">{big}</div>
+      </div>
+    </a>
+  );
+}
+
+function AppleIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M16.4 12.7c0-2.7 2.2-4 2.3-4-1.3-1.8-3.2-2-3.9-2-1.7-.2-3.2 1-4 1s-2.1-1-3.5-1c-1.8 0-3.5 1-4.4 2.6-1.9 3.3-.5 8.2 1.4 10.8.9 1.3 2 2.7 3.4 2.7s2-.9 3.7-.9 2.2.9 3.7.9c1.5 0 2.5-1.3 3.4-2.6.7-1 1.3-2.1 1.7-3.3-3-1.2-3.8-3.4-3.8-4.2zM14 4.5C14.7 3.6 15.2 2.4 15 1.2c-1 0-2.3.7-3.1 1.6-.7.8-1.3 2-1.1 3.2 1.2.1 2.4-.6 3.2-1.5z" />
+    </svg>
+  );
+}
+
+function GooglePlayIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+      <path d="M3.6 2.4C3.3 2.7 3 3.2 3 4v16c0 .8.3 1.3.6 1.6L13 12 3.6 2.4zm10.6 9.6 2.6-2.6L5.6 3.3 14.2 12zm0 0L5.6 20.7l11.2-6.1-2.6-2.6zm5.1-2.9-2.8 1.6 2.6 2.6L21.7 12c.4-.4.4-1.3-.4-1.9-.2-.1-1.2-.7-2-1z" />
+    </svg>
   );
 }
 
