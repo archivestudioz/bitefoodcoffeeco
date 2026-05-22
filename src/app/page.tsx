@@ -259,14 +259,9 @@ function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-24 lg:py-28">
-        <div className="max-w-3xl">
-          <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-ink shadow-bold-sm">
-            <span className="h-2 w-2 rounded-full bg-ink" />
-            100% halal · NJ
-          </span>
-
-          <h1 className="mt-6 font-display text-[64px] leading-[0.95] tracking-tight text-cream sm:text-[88px] lg:text-[112px]">
+      <div className="relative z-10 w-full px-3 py-20 sm:px-5 md:py-24 lg:py-28">
+        <div className="max-w-5xl">
+          <h1 className="font-display text-[80px] leading-[0.92] tracking-tight text-cream sm:text-[120px] lg:text-[152px] xl:text-[172px]">
             best
             <br />
             <RotatingWord />
@@ -274,14 +269,14 @@ function Hero() {
             in jersey.
           </h1>
 
-          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-cream/85">
+          <p className="mt-8 max-w-xl text-xl font-medium leading-relaxed text-cream/85 sm:text-2xl lg:text-3xl">
             Made fresh, made halal, made for you.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-10">
             <a
               href={ORDER_URL}
-              className="press inline-flex h-14 items-center rounded-full border-2 border-cream bg-pink px-8 text-sm font-bold uppercase tracking-widest text-ink shadow-bold"
+              className="press inline-flex h-16 items-center rounded-full border-2 border-cream bg-pink px-10 text-base font-bold uppercase tracking-widest text-ink shadow-bold sm:h-[68px] sm:px-12 sm:text-lg"
               style={{ boxShadow: "6px 6px 0 0 #fff5e6" }}
             >
               Order online →
