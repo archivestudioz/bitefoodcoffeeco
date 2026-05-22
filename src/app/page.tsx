@@ -70,37 +70,50 @@ const reviews = [
     quote:
       "Chicken & waffles are UNREAL. Service is warm, the space is gorgeous.",
     rotate: "-rotate-2",
-    bg: "bg-cream",
+    order: "2384",
+    when: "WED 8:42 AM",
+    tip: "ALL VIBES",
   },
   {
     name: "Darren W.",
     quote:
       "Best breakfast in Bergen County. Crème brûlée waffle = worth the trip.",
     rotate: "rotate-1",
-    bg: "bg-cream",
+    order: "1907",
+    when: "SAT 10:15 AM",
+    tip: "10/10",
   },
   {
     name: "Max E.",
     quote:
       "Halal, huge portions, killer coffee. We're regulars now. Steak & eggs never miss.",
     rotate: "-rotate-1",
-    bg: "bg-cream",
+    order: "0712",
+    when: "FRI 12:30 PM",
+    tip: "REGULAR",
   },
   {
     name: "Tasha K.",
     quote:
       "Matcha is elite. Came for the drinks, stayed three hours. Best vibe in town.",
     rotate: "rotate-2",
-    bg: "bg-cream",
+    order: "3551",
+    when: "THU 3:08 PM",
+    tip: "ICED ❄",
   },
   {
     name: "Jay R.",
     quote:
       "Breakfast sandwich is a 10/10. Halal kitchen + hot honey = my whole personality now.",
     rotate: "-rotate-1",
-    bg: "bg-cream",
+    order: "4429",
+    when: "MON 9:21 AM",
+    tip: "HOT HONEY",
   },
 ];
+
+const RECEIPT_CLIP =
+  "polygon(0 8px, 5% 0, 10% 8px, 15% 0, 20% 8px, 25% 0, 30% 8px, 35% 0, 40% 8px, 45% 0, 50% 8px, 55% 0, 60% 8px, 65% 0, 70% 8px, 75% 0, 80% 8px, 85% 0, 90% 8px, 95% 0, 100% 8px, 100% calc(100% - 8px), 95% 100%, 90% calc(100% - 8px), 85% 100%, 80% calc(100% - 8px), 75% 100%, 70% calc(100% - 8px), 65% 100%, 60% calc(100% - 8px), 55% 100%, 50% calc(100% - 8px), 45% 100%, 40% calc(100% - 8px), 35% 100%, 30% calc(100% - 8px), 25% 100%, 20% calc(100% - 8px), 15% 100%, 10% calc(100% - 8px), 5% 100%, 0 calc(100% - 8px))";
 
 const marqueeBits = [
   "halal kitchen",
@@ -362,29 +375,82 @@ function Reviews() {
         </div>
       </div>
 
-      <div className="marquee-container py-12 lg:py-16">
-        <div className="flex animate-marquee-slow gap-6 px-4 sm:px-6">
+      <div className="marquee-container py-14 lg:py-20">
+        <div className="flex animate-marquee-slow gap-8 px-4 sm:px-6">
           {doubled.map((r, i) => (
             <figure
               key={i}
-              className={`relative flex w-[320px] shrink-0 flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold transition-transform duration-300 ease-out hover:scale-[1.06] hover:z-10 sm:w-[360px] ${r.bg} ${r.rotate}`}
+              className={`relative flex w-[280px] shrink-0 flex-col bg-cream text-ink transition-transform duration-300 ease-out hover:scale-[1.05] hover:z-10 sm:w-[320px] ${r.rotate}`}
+              style={{
+                clipPath: RECEIPT_CLIP,
+                filter: "drop-shadow(5px 5px 0 #0a0a0a)",
+              }}
             >
-              <div className="flex gap-1 text-pink" aria-label="5 stars">
+              {/* Header */}
+              <div className="px-6 pt-7 text-center font-mono text-[11px] uppercase leading-snug tracking-wider">
+                <p className="font-bold">BITE FOOD &amp; COFFEE CO.</p>
+                <p className="mt-0.5 text-ink/70">360 Essex St · Hackensack, NJ</p>
+                <p className="mt-0.5 text-ink/70">(201) 560-2269</p>
+              </div>
+
+              <ReceiptDivider />
+
+              {/* Order meta */}
+              <div className="px-6 text-center font-mono text-[11px] uppercase tracking-wider text-ink/80">
+                ORDER #{r.order} · {r.when}
+              </div>
+
+              <ReceiptDivider />
+
+              {/* Stars */}
+              <div className="flex justify-center gap-1.5 px-6 text-pink" aria-label="5 stars">
                 {Array.from({ length: 5 }).map((_, j) => (
                   <Star key={j} />
                 ))}
               </div>
-              <blockquote className="mt-3 flex-1 font-display text-lg leading-snug">
+
+              {/* Quote */}
+              <blockquote className="mt-3 flex-1 px-6 text-center font-mono text-[13px] leading-relaxed">
                 &ldquo;{r.quote}&rdquo;
               </blockquote>
-              <figcaption className="mt-5 text-xs font-bold uppercase tracking-widest">
-                — {r.name}
-              </figcaption>
+
+              <ReceiptDivider dashed />
+
+              {/* Customer */}
+              <div className="px-6 font-mono text-[11px] uppercase tracking-wider">
+                <div className="flex justify-between">
+                  <span className="text-ink/70">CUSTOMER</span>
+                  <span className="font-bold">{r.name.toUpperCase()}</span>
+                </div>
+                <div className="mt-1 flex justify-between">
+                  <span className="text-ink/70">TIP</span>
+                  <span className="font-bold">{r.tip}</span>
+                </div>
+              </div>
+
+              <ReceiptDivider />
+
+              {/* Footer */}
+              <div className="px-6 pb-7 text-center font-mono text-[10px] uppercase tracking-widest">
+                <p className="font-bold">thank you ✦ come back</p>
+                <p className="mt-1 text-ink/70">@bitefoodcoffeeco</p>
+              </div>
             </figure>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function ReceiptDivider({ dashed = false }: { dashed?: boolean }) {
+  return (
+    <div
+      className={`my-3 mx-6 border-t ${
+        dashed ? "border-dashed border-ink/60" : "border-ink/80"
+      }`}
+      aria-hidden="true"
+    />
   );
 }
 
