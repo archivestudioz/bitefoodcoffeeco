@@ -174,22 +174,33 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-pink">
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-8 top-10 font-display text-[220px] leading-none text-ink/15 select-none rotate-12"
-      >
-        ✺
-      </span>
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -left-6 bottom-10 font-display text-[140px] leading-none text-ink/10 select-none -rotate-12"
-      >
-        ✺
-      </span>
+    <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
+      {/* Background video */}
+      <video
+        src="/photos/hero.mp4"
+        poster="/photos/hero-poster.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        className="absolute inset-0 h-full w-full object-cover"
+        aria-hidden="true"
+      />
 
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-16 sm:px-6 md:pt-24 md:pb-20 lg:pt-28 lg:pb-24">
-        <div className="relative z-10 max-w-3xl">
+      {/* Pink overlay — strong on the left for headline contrast, fading right */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-r from-pink via-pink/80 to-pink/35"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-pink/40"
+      />
+
+      {/* Content */}
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:py-32">
+        <div className="max-w-3xl">
           <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
             <span className="h-2 w-2 rounded-full bg-ink" />
             100% halal · NJ
@@ -203,7 +214,7 @@ function Hero() {
             in jersey.
           </h1>
 
-          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink/70">
+          <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-ink/80">
             Brunch. Dinner. Matcha. Pancakes at 7pm.
             <br />
             Made fresh, made halal, made for you.
@@ -224,28 +235,14 @@ function Hero() {
             </Link>
           </div>
         </div>
+      </div>
 
-        <div className="relative mt-14 md:mt-16">
-          <div className="relative aspect-video w-full overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
-            <video
-              src="/photos/hero.mp4"
-              poster="/photos/hero-poster.jpg"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="absolute inset-0 h-full w-full object-cover"
-              aria-label="Late-night Bite vibes"
-            />
-          </div>
-          <div className="wobble absolute -bottom-5 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-5 py-2.5 font-display text-2xl shadow-bold-sm sm:-bottom-7 sm:-left-7 sm:text-3xl">
-            yum*
-          </div>
-          <div className="wobble absolute -top-4 -right-4 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm sm:-top-5 sm:-right-5">
-            new menu ✦
-          </div>
-        </div>
+      {/* Stickers anchored to the hero section */}
+      <div className="wobble absolute bottom-6 left-6 z-20 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-5 py-2.5 font-display text-2xl shadow-bold-sm sm:bottom-8 sm:left-8 sm:text-3xl">
+        yum*
+      </div>
+      <div className="wobble absolute right-6 top-24 z-20 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm sm:right-10 sm:top-28">
+        new menu ✦
       </div>
     </section>
   );
