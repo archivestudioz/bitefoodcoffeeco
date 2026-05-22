@@ -153,8 +153,8 @@ const marqueeBits = [
 const polaroids = [
   {
     src: "/photos/wild-1.jpg",
-    alt: "Latte being poured at the espresso bar",
-    caption: "coffee era ☕",
+    alt: "Holding up the Spring/Summer 2025 BITE menu",
+    caption: "menu szn ✦",
     rotate: "-rotate-3",
     bg: "bg-cream",
   },
