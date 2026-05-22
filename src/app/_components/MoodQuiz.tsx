@@ -109,19 +109,42 @@ const RECEIPT_CLIP =
 
 const ORDER_URL = "https://bitefoodcoffee.com/order";
 
+const SURPRISE_QUIPS = [
+  "eyes closed. blind shuffle ✦",
+  "throwing a dart at the menu 🎯",
+  "what the kitchen handed me ✦",
+  "reaching into the kitchen, no questions ✦",
+  "no thinking. just food ✦",
+];
+
 export function MoodQuiz() {
   const [isOpen, setIsOpen] = useState(false);
   const [hunger, setHunger] = useState<Hunger | null>(null);
   const [time, setTime] = useState<Time | null>(null);
   const [vibe, setVibe] = useState<Vibe | null>(null);
+  const [surprise, setSurprise] = useState<{ dish: Dish; quip: string } | null>(
+    null,
+  );
 
-  const complete = hunger !== null && time !== null && vibe !== null;
-  const dish = complete ? pickDish(hunger, time, vibe) : null;
+  const quizComplete = hunger !== null && time !== null && vibe !== null;
+  const quizDish = quizComplete ? pickDish(hunger, time, vibe) : null;
+
+  // Either the picked-quiz dish OR a surprise dish
+  const resultDish = surprise?.dish ?? quizDish;
+  const isSurprise = surprise !== null;
+  const showingResult = isSurprise || (quizComplete && quizDish !== null);
 
   const reset = () => {
     setHunger(null);
     setTime(null);
     setVibe(null);
+    setSurprise(null);
+  };
+
+  const handleSurprise = () => {
+    const dish = DISHES[Math.floor(Math.random() * DISHES.length)];
+    const quip = SURPRISE_QUIPS[Math.floor(Math.random() * SURPRISE_QUIPS.length)];
+    setSurprise({ dish, quip });
   };
 
   return (
@@ -185,13 +208,15 @@ export function MoodQuiz() {
           </div>
 
           {/* Body */}
-          <div className="max-h-[60vh] overflow-y-auto px-5 py-5">
-            {complete && dish ? (
+          <div className="max-h-[75vh] overflow-y-auto px-5 py-5">
+            {showingResult && resultDish ? (
               <ResultView
-                dish={dish}
+                dish={resultDish}
                 hunger={hunger}
                 time={time}
                 vibe={vibe}
+                isSurprise={isSurprise}
+                surpriseQuip={surprise?.quip}
                 onReset={reset}
               />
             ) : (
@@ -202,6 +227,7 @@ export function MoodQuiz() {
                 onHunger={setHunger}
                 onTime={setTime}
                 onVibe={setVibe}
+                onSurprise={handleSurprise}
               />
             )}
           </div>
@@ -534,6 +560,7 @@ function QuizView({
   onHunger,
   onTime,
   onVibe,
+  onSurprise,
 }: {
   hunger: Hunger | null;
   time: Time | null;
@@ -541,6 +568,7 @@ function QuizView({
   onHunger: (v: Hunger) => void;
   onTime: (v: Time) => void;
   onVibe: (v: Vibe) => void;
+  onSurprise: () => void;
 }) {
   return (
     <div className="grid gap-6">
@@ -566,6 +594,25 @@ function QuizView({
         selected={vibe}
         onSelect={onVibe}
       />
+
+      {/* Surprise me escape hatch */}
+      <div className="flex items-center gap-3 pt-2">
+        <span className="h-px flex-1 bg-ink/20" aria-hidden="true" />
+        <span className="font-mono text-[10px] uppercase tracking-widest text-ink/50">
+          or
+        </span>
+        <span className="h-px flex-1 bg-ink/20" aria-hidden="true" />
+      </div>
+      <button
+        type="button"
+        onClick={onSurprise}
+        className="press group inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-ink bg-pink px-5 py-2.5 text-sm font-bold uppercase tracking-widest text-ink shadow-bold-sm"
+      >
+        <span aria-hidden="true" className="text-base leading-none transition-transform duration-300 group-hover:rotate-180">
+          ↻
+        </span>
+        just pick for me
+      </button>
     </div>
   );
 }
@@ -632,17 +679,31 @@ function ResultView({
   hunger,
   time,
   vibe,
+  isSurprise,
+  surpriseQuip,
   onReset,
 }: {
   dish: Dish;
-  hunger: Hunger;
-  time: Time;
-  vibe: Vibe;
+  hunger: Hunger | null;
+  time: Time | null;
+  vibe: Vibe | null;
+  isSurprise: boolean;
+  surpriseQuip?: string;
   onReset: () => void;
 }) {
-  const hungerLabel = HUNGER_OPTIONS.find((o) => o.value === hunger)!.label;
-  const timeLabel = TIME_OPTIONS.find((o) => o.value === time)!.label;
-  const vibeLabel = VIBE_OPTIONS.find((o) => o.value === vibe)!.label;
+  const hungerLabel = hunger
+    ? HUNGER_OPTIONS.find((o) => o.value === hunger)!.label
+    : null;
+  const timeLabel = time
+    ? TIME_OPTIONS.find((o) => o.value === time)!.label
+    : null;
+  const vibeLabel = vibe
+    ? VIBE_OPTIONS.find((o) => o.value === vibe)!.label
+    : null;
+
+  const introMessage = isSurprise
+    ? surpriseQuip ?? "what the kitchen handed me ✦"
+    : "based on the vibes ✦ here's your bite:";
 
   return (
     <div className="grid gap-4">
@@ -651,7 +712,7 @@ function ResultView({
           <OracleFace size={32} detailed={false} animated />
         </span>
         <div className="rounded-2xl rounded-tl-md border-2 border-ink bg-pink/40 px-3 py-2 font-mono text-[12px] leading-snug">
-          based on the vibes ✦ here&apos;s your bite:
+          {introMessage}
         </div>
       </div>
 
@@ -665,16 +726,24 @@ function ResultView({
         {/* Header */}
         <div className="px-6 pt-7 text-center font-mono text-[10px] uppercase leading-snug tracking-wider">
           <p className="font-bold">BITE FOOD &amp; COFFEE CO.</p>
-          <p className="mt-0.5 text-ink/70">─── THE ORACLE ───</p>
+          <p className="mt-0.5 text-ink/70">
+            {isSurprise ? "─── BLIND PICK ───" : "─── THE ORACLE ───"}
+          </p>
         </div>
 
         <Divider />
 
-        <div className="px-6 font-mono text-[10px] uppercase tracking-wider">
-          <Line label="HUNGER" value={hungerLabel} />
-          <Line label="TIME" value={timeLabel} />
-          <Line label="VIBE" value={vibeLabel} />
-        </div>
+        {isSurprise ? (
+          <div className="px-6 text-center font-mono text-[10px] uppercase tracking-wider text-ink/70">
+            no questions · just food
+          </div>
+        ) : (
+          <div className="px-6 font-mono text-[10px] uppercase tracking-wider">
+            {hungerLabel && <Line label="HUNGER" value={hungerLabel} />}
+            {timeLabel && <Line label="TIME" value={timeLabel} />}
+            {vibeLabel && <Line label="VIBE" value={vibeLabel} />}
+          </div>
+        )}
 
         <Divider dashed />
 
@@ -709,7 +778,7 @@ function ResultView({
         onClick={onReset}
         className="font-mono text-[11px] uppercase tracking-widest text-ink/70 hover:text-ink hover:underline"
       >
-        ↻ try again
+        ↻ {isSurprise ? "roll again" : "try again"}
       </button>
     </div>
   );
