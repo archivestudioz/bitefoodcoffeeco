@@ -121,24 +121,24 @@ export function FeaturedSlider({ items }: { items: FeaturedItem[] }) {
         {items.map((item) => (
           <article
             key={item.name}
-            className="lift relative w-[260px] shrink-0 snap-start overflow-hidden rounded-[28px] border-2 border-ink bg-pink shadow-bold sm:w-[300px] lg:w-[340px]"
+            className="lift relative w-[300px] shrink-0 snap-start overflow-hidden rounded-[28px] border-2 border-ink bg-pink shadow-bold sm:w-[360px] lg:w-[420px]"
           >
             <div className="pointer-events-none relative aspect-[4/3] overflow-hidden border-b-2 border-ink">
               <Image
                 src={item.image}
                 alt={item.name}
                 fill
-                sizes="(min-width: 1024px) 340px, (min-width: 640px) 300px, 260px"
+                sizes="(min-width: 1024px) 420px, (min-width: 640px) 360px, 300px"
                 className="object-cover"
                 draggable={false}
               />
-              <span className="absolute left-3 top-3 rotate-[-6deg] rounded-full border-2 border-ink bg-cream px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+              <span className="absolute left-4 top-4 rotate-[-6deg] rounded-full border-2 border-ink bg-cream px-3 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
                 {item.tag}
               </span>
             </div>
-            <div className="p-6">
-              <h3 className="font-display text-3xl leading-none">{item.name}</h3>
-              <p className="mt-2 text-sm font-medium leading-relaxed text-ink/75">
+            <div className="p-7">
+              <h3 className="font-display text-4xl leading-none">{item.name}</h3>
+              <p className="mt-3 text-sm font-medium leading-relaxed text-ink/75">
                 {item.blurb}
               </p>
             </div>

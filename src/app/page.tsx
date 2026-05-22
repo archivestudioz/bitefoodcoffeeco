@@ -301,13 +301,13 @@ function Marquee() {
 function Featured() {
   return (
     <section id="menu" className="border-b-2 border-ink bg-cream">
-      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-24">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+      <div className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10 lg:px-12 lg:py-32">
+        <div className="flex flex-wrap items-end justify-between gap-8">
           <div>
             <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
               the hits ✦
             </span>
-            <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">
+            <h2 className="mt-6 font-display text-6xl leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
               food
               <br />
               <span className="text-pink">people scream</span>
@@ -323,7 +323,7 @@ function Featured() {
           </a>
         </div>
 
-        <div className="mt-14">
+        <div className="mt-16 lg:mt-20">
           <FeaturedSlider items={featured} />
         </div>
       </div>
@@ -334,13 +334,13 @@ function Featured() {
 function PolaroidWall() {
   return (
     <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-16">
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+      <div className="mx-auto max-w-[1600px] px-6 py-24 sm:px-10 lg:px-12 lg:py-32">
+        <div className="mb-14 flex flex-wrap items-end justify-between gap-6 lg:mb-16">
           <div>
             <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-cream px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
               in the wild ✦
             </span>
-            <h2 className="mt-4 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
+            <h2 className="mt-5 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
               caught on camera.
             </h2>
           </div>
@@ -348,13 +348,13 @@ function PolaroidWall() {
             href="https://instagram.com/bitefoodcoffeeco"
             target="_blank"
             rel="noreferrer"
-            className="press inline-flex h-11 items-center rounded-full border-2 border-ink bg-ink px-5 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm"
+            className="press inline-flex h-12 items-center rounded-full border-2 border-ink bg-ink px-6 text-sm font-bold uppercase tracking-widest text-pink shadow-bold-sm"
           >
             @bitefoodcoffeeco →
           </a>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {polaroids.map((p, i) => (
             <figure
               key={i}
@@ -365,12 +365,12 @@ function PolaroidWall() {
                   src={p.src}
                   alt={p.alt}
                   fill
-                  sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
+                  sizes="(min-width: 1024px) 24vw, (min-width: 640px) 45vw, 90vw"
                   className="object-cover transition duration-500 hover:scale-105"
                 />
               </div>
-              <figcaption className="px-4 py-3">
-                <span className="inline-block rotate-[-2deg] font-display text-xl leading-none">
+              <figcaption className="px-5 py-4">
+                <span className="inline-block rotate-[-2deg] font-display text-2xl leading-none">
                   {p.caption}
                 </span>
               </figcaption>
