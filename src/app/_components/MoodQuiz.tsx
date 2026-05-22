@@ -75,6 +75,7 @@ function makeRandomPick(prev?: Surprise): Surprise {
 
 export function MoodQuiz() {
   const [isOpen, setIsOpen] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [surprise, setSurprise] = useState<Surprise | null>(null);
 
   const openOracle = () => {
@@ -88,30 +89,43 @@ export function MoodQuiz() {
     setSurprise((prev) => makeRandomPick(prev ?? undefined));
   };
 
+  if (dismissed) return null;
+
   return (
     <>
-      {/* Launcher */}
-      <button
-        type="button"
-        onClick={openOracle}
-        aria-label="Open the Oracle — get a dish picked for you"
-        className={`group fixed bottom-3 right-3 z-50 flex items-end transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
+      {/* Launcher area — wraps the cup button + a sibling dismiss button */}
+      <div
+        className={`fixed bottom-3 right-3 z-50 transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <span
-          className="relative block h-32 w-24 sm:h-40 sm:w-28"
-          style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
+        <button
+          type="button"
+          onClick={openOracle}
+          aria-label="Open the Oracle — get a dish picked for you"
+          className="group block"
         >
-          <OracleFace animated />
           <span
-            aria-hidden="true"
-            className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
+            className="relative block h-32 w-24 sm:h-40 sm:w-28"
+            style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
           >
-            ✦
+            <OracleFace animated />
           </span>
-        </span>
-      </button>
+        </button>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setDismissed(true);
+          }}
+          aria-label="Dismiss the Oracle"
+          className="press absolute right-0 top-3 z-10 flex h-7 w-7 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-ink font-display text-sm leading-none text-pink shadow-bold-sm sm:right-1 sm:top-4 sm:h-8 sm:w-8"
+        >
+          <span aria-hidden="true" className="leading-none">
+            ×
+          </span>
+        </button>
+      </div>
 
       {/* Panel */}
       <div
