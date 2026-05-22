@@ -205,8 +205,6 @@ function Hero() {
           </h1>
 
           <p className="mt-7 max-w-md text-lg font-medium leading-relaxed text-cream/85">
-            Brunch. Dinner. Matcha. Pancakes at 7pm.
-            <br />
             Made fresh, made halal, made for you.
           </p>
 
