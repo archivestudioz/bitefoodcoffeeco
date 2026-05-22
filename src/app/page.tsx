@@ -89,7 +89,28 @@ const reviews = [
     quote:
       "Best breakfast in Bergen County. Crème brûlée waffle = worth the trip.",
     rotate: "rotate-1",
-    bg: "bg-tan",
+    bg: "bg-pink-soft",
+  },
+  {
+    name: "Max E.",
+    quote:
+      "Halal, huge portions, killer coffee. We're regulars now. Steak & eggs never miss.",
+    rotate: "-rotate-1",
+    bg: "bg-lime",
+  },
+  {
+    name: "Tasha K.",
+    quote:
+      "Matcha is elite. Came for the drinks, stayed three hours. Best vibe in town.",
+    rotate: "rotate-2",
+    bg: "bg-cream",
+  },
+  {
+    name: "Jay R.",
+    quote:
+      "Breakfast sandwich is a 10/10. Halal kitchen + hot honey = my whole personality now.",
+    rotate: "-rotate-1",
+    bg: "bg-pink-soft",
   },
 ];
 
@@ -427,40 +448,42 @@ function Explore() {
 }
 
 function Reviews() {
+  const doubled = [...reviews, ...reviews];
   return (
-    <section className="border-b-2 border-ink bg-tan">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-20">
-        <div className="grid gap-10 md:grid-cols-12 md:items-center">
-          <div className="md:col-span-4">
-            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
-              loved
-            </span>
-            <h2 className="mt-5 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
-              regulars<br />
-              <span className="text-pink-deep">say it best.</span>
-            </h2>
-          </div>
+    <section className="marquee-container border-b-2 border-ink bg-tan overflow-hidden">
+      <div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:pt-20">
+        <div className="max-w-2xl">
+          <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+            loved
+          </span>
+          <h2 className="mt-5 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
+            regulars
+            <br />
+            <span className="text-pink-deep">say it best.</span>
+          </h2>
+        </div>
+      </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 md:col-span-8">
-            {reviews.map((r) => (
-              <figure
-                key={r.name}
-                className={`lift flex h-full flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold ${r.bg} ${r.rotate}`}
-              >
-                <div className="flex gap-1 text-pink-deep" aria-label="5 stars">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} />
-                  ))}
-                </div>
-                <blockquote className="mt-3 flex-1 font-display text-lg leading-snug">
-                  &ldquo;{r.quote}&rdquo;
-                </blockquote>
-                <figcaption className="mt-5 text-xs font-bold uppercase tracking-widest">
-                  — {r.name}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+      <div className="py-12 lg:py-16">
+        <div className="flex animate-marquee gap-6 px-4 sm:px-6">
+          {doubled.map((r, i) => (
+            <figure
+              key={i}
+              className={`flex w-[320px] shrink-0 flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold sm:w-[360px] ${r.bg} ${r.rotate}`}
+            >
+              <div className="flex gap-1 text-pink-deep" aria-label="5 stars">
+                {Array.from({ length: 5 }).map((_, j) => (
+                  <Star key={j} />
+                ))}
+              </div>
+              <blockquote className="mt-3 flex-1 font-display text-lg leading-snug">
+                &ldquo;{r.quote}&rdquo;
+              </blockquote>
+              <figcaption className="mt-5 text-xs font-bold uppercase tracking-widest">
+                — {r.name}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>
