@@ -104,33 +104,32 @@ const marqueeBits = [
   "big portions",
 ];
 
-// Brand polaroids — replace with /photos/wild-*.jpg once user drops files in public/photos/
 const polaroids = [
   {
-    src: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
-    alt: "Two cocktails cheers shot",
-    caption: "matcha hour",
+    src: "/photos/wild-1.jpg",
+    alt: "Latte being poured at the espresso bar",
+    caption: "coffee era ☕",
     rotate: "-rotate-3",
     bg: "bg-cream",
   },
   {
-    src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
-    alt: "Latte being poured",
-    caption: "coffee era",
+    src: "/photos/wild-2.jpg",
+    alt: "Late night burger run under the lamp post",
+    caption: "late night moves",
     rotate: "rotate-2",
     bg: "bg-tan",
   },
   {
-    src: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
-    alt: "Burger close-up at night",
-    caption: "late night fuel",
+    src: "/photos/wild-3.jpg",
+    alt: "Burger and iced coffee, dialed in",
+    caption: "double-fisting",
     rotate: "-rotate-1",
     bg: "bg-pink-soft",
   },
   {
-    src: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80",
-    alt: "Crispy chicken sandwich",
-    caption: "the crispy one",
+    src: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+    alt: "Drinks cheers",
+    caption: "drinks szn",
     rotate: "rotate-3",
     bg: "bg-lime",
   },
@@ -236,8 +235,8 @@ function Hero() {
         <div className="relative md:col-span-5">
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-tan shadow-bold">
             <Image
-              src="https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=1600&q=80"
-              alt="Plate of chicken and waffles"
+              src="/photos/hero.jpg"
+              alt="Late-night chicken sandwich, jersey on"
               fill
               priority
               sizes="(min-width: 768px) 40vw, 100vw"
