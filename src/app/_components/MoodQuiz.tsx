@@ -122,9 +122,11 @@ export function MoodQuiz() {
   const [hunger, setHunger] = useState<Hunger | null>(null);
   const [time, setTime] = useState<Time | null>(null);
   const [vibe, setVibe] = useState<Vibe | null>(null);
-  const [surprise, setSurprise] = useState<{ dish: Dish; quip: string } | null>(
-    null,
-  );
+  const [surprise, setSurprise] = useState<{
+    dish: Dish;
+    quip: string;
+    rolledAt: number;
+  } | null>(null);
 
   const quizComplete = hunger !== null && time !== null && vibe !== null;
   const quizDish = quizComplete ? pickDish(hunger, time, vibe) : null;
@@ -142,9 +144,19 @@ export function MoodQuiz() {
   };
 
   const handleSurprise = () => {
-    const dish = DISHES[Math.floor(Math.random() * DISHES.length)];
-    const quip = SURPRISE_QUIPS[Math.floor(Math.random() * SURPRISE_QUIPS.length)];
-    setSurprise({ dish, quip });
+    // Avoid the same dish twice in a row when re-rolling.
+    const pool =
+      surprise && DISHES.length > 1
+        ? DISHES.filter((d) => d.name !== surprise.dish.name)
+        : DISHES;
+    const dish = pool[Math.floor(Math.random() * pool.length)];
+    // Same idea for the quip.
+    const quipPool =
+      surprise && SURPRISE_QUIPS.length > 1
+        ? SURPRISE_QUIPS.filter((q) => q !== surprise.quip)
+        : SURPRISE_QUIPS;
+    const quip = quipPool[Math.floor(Math.random() * quipPool.length)];
+    setSurprise({ dish, quip, rolledAt: Date.now() });
   };
 
   return (
@@ -217,7 +229,9 @@ export function MoodQuiz() {
                 vibe={vibe}
                 isSurprise={isSurprise}
                 surpriseQuip={surprise?.quip}
+                surpriseId={surprise?.rolledAt}
                 onReset={reset}
+                onRoll={handleSurprise}
               />
             ) : (
               <QuizView
@@ -681,7 +695,9 @@ function ResultView({
   vibe,
   isSurprise,
   surpriseQuip,
+  surpriseId,
   onReset,
+  onRoll,
 }: {
   dish: Dish;
   hunger: Hunger | null;
@@ -689,7 +705,9 @@ function ResultView({
   vibe: Vibe | null;
   isSurprise: boolean;
   surpriseQuip?: string;
+  surpriseId?: number;
   onReset: () => void;
+  onRoll: () => void;
 }) {
   const hungerLabel = hunger
     ? HUNGER_OPTIONS.find((o) => o.value === hunger)!.label
@@ -717,7 +735,10 @@ function ResultView({
       </div>
 
       <figure
-        className="receipt-paper animate-fade-up relative mx-auto w-full text-ink"
+        key={isSurprise ? `roll-${surpriseId ?? 0}` : "quiz-result"}
+        className={`receipt-paper relative mx-auto w-full text-ink ${
+          isSurprise ? "animate-roll-in" : "animate-fade-up"
+        }`}
         style={{
           clipPath: RECEIPT_CLIP,
           filter: "drop-shadow(4px 4px 0 #0a0a0a)",
@@ -773,13 +794,29 @@ function ResultView({
         </div>
       </figure>
 
-      <button
-        type="button"
-        onClick={onReset}
-        className="font-mono text-[11px] uppercase tracking-widest text-ink/70 hover:text-ink hover:underline"
-      >
-        ↻ {isSurprise ? "roll again" : "try again"}
-      </button>
+      <div className="flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={isSurprise ? onRoll : onReset}
+          className="font-mono text-[11px] uppercase tracking-widest text-ink/70 hover:text-ink hover:underline"
+        >
+          ↻ {isSurprise ? "roll again" : "try again"}
+        </button>
+        {isSurprise && (
+          <>
+            <span aria-hidden="true" className="text-ink/30">
+              ·
+            </span>
+            <button
+              type="button"
+              onClick={onReset}
+              className="font-mono text-[11px] uppercase tracking-widest text-ink/70 hover:text-ink hover:underline"
+            >
+              answer 3 instead
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
