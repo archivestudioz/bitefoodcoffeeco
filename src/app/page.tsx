@@ -104,6 +104,38 @@ const marqueeBits = [
   "big portions",
 ];
 
+// Brand polaroids — replace with /photos/wild-*.jpg once user drops files in public/photos/
+const polaroids = [
+  {
+    src: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=900&q=80",
+    alt: "Two cocktails cheers shot",
+    caption: "matcha hour",
+    rotate: "-rotate-3",
+    bg: "bg-cream",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+    alt: "Latte being poured",
+    caption: "coffee era",
+    rotate: "rotate-2",
+    bg: "bg-tan",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80",
+    alt: "Burger close-up at night",
+    caption: "late night fuel",
+    rotate: "-rotate-1",
+    bg: "bg-pink-soft",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?auto=format&fit=crop&w=900&q=80",
+    alt: "Crispy chicken sandwich",
+    caption: "the crispy one",
+    rotate: "rotate-3",
+    bg: "bg-lime",
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -112,6 +144,7 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Featured />
+        <PolaroidWall />
         <Explore />
         <Reviews />
       </main>
@@ -291,6 +324,57 @@ function Featured() {
                 </p>
               </div>
             </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PolaroidWall() {
+  return (
+    <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:py-16">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-tan px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
+              in the wild ✦
+            </span>
+            <h2 className="mt-4 font-display text-4xl leading-[0.95] tracking-tight sm:text-6xl">
+              caught on camera.
+            </h2>
+          </div>
+          <a
+            href="https://instagram.com/bitefoodcoffeeco"
+            target="_blank"
+            rel="noreferrer"
+            className="press inline-flex h-11 items-center rounded-full border-2 border-ink bg-ink px-5 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm"
+          >
+            @bitefoodcoffeeco →
+          </a>
+        </div>
+
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {polaroids.map((p, i) => (
+            <figure
+              key={i}
+              className={`lift relative overflow-hidden rounded-2xl border-2 border-ink shadow-bold ${p.bg} ${p.rotate}`}
+            >
+              <div className="relative aspect-[3/4] overflow-hidden border-b-2 border-ink">
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  fill
+                  sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
+                  className="object-cover transition duration-500 hover:scale-105"
+                />
+              </div>
+              <figcaption className="px-4 py-3">
+                <span className="inline-block rotate-[-2deg] font-display text-xl leading-none">
+                  {p.caption}
+                </span>
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>
