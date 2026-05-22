@@ -139,17 +139,6 @@ const RECEIPT_EDGES = [
   "polygon(0 5px, 3% 11px, 7% 2px, 11% 9px, 16% 4px, 21% 10px, 26% 1px, 31% 8px, 36% 11px, 41% 3px, 46% 7px, 51% 2px, 56% 10px, 61% 5px, 66% 1px, 71% 9px, 76% 4px, 81% 11px, 86% 2px, 91% 8px, 96% 3px, 100% 5px, 100% calc(100% - 4px), 95% calc(100% - 10px), 91% calc(100% - 2px), 86% calc(100% - 8px), 82% calc(100% - 4px), 77% calc(100% - 11px), 72% calc(100% - 1px), 67% calc(100% - 7px), 62% calc(100% - 10px), 57% calc(100% - 3px), 52% calc(100% - 9px), 47% calc(100% - 2px), 42% calc(100% - 8px), 37% calc(100% - 5px), 32% calc(100% - 11px), 27% calc(100% - 2px), 22% calc(100% - 6px), 17% calc(100% - 4px), 12% calc(100% - 10px), 7% calc(100% - 1px), 3% calc(100% - 5px), 0 calc(100% - 4px))",
 ];
 
-const marqueeBits = [
-  "halal kitchen",
-  "matcha freaks welcome",
-  "all-day brunch",
-  "pancakes at 7pm? yes",
-  "two NJ kitchens",
-  "made fresh daily",
-  "iced everything",
-  "big portions",
-];
-
 const polaroids = [
   {
     src: "/photos/wild-1.jpg",
@@ -253,7 +242,7 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative flex min-h-[88vh] items-center overflow-hidden border-b-2 border-ink bg-ink text-cream">
+    <section className="relative flex min-h-screen items-center overflow-hidden border-b-2 border-ink bg-ink text-cream">
       {/* Background video — bg-ink behind it darkens slightly, no pink tint */}
       <video
         src="/photos/hero.mp4"
@@ -302,21 +291,6 @@ function Hero() {
   );
 }
 
-function Marquee() {
-  const doubled = [...marqueeBits, ...marqueeBits];
-  return (
-    <section className="marquee-container border-y-2 border-ink bg-pink py-4 text-ink overflow-hidden">
-      <div className="flex animate-marquee gap-10 whitespace-nowrap font-display text-3xl sm:text-4xl">
-        {doubled.map((bit, i) => (
-          <span key={i} className="flex items-center gap-10">
-            <span>{bit}</span>
-            <span aria-hidden className="text-ink">✺</span>
-          </span>
-        ))}
-      </div>
-    </section>
-  );
-}
 
 function Featured() {
   return (
