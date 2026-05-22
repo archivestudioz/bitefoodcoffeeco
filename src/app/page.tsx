@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RotatingWord } from "./_components/RotatingWord";
 import { FeaturedSlider } from "./_components/FeaturedSlider";
+import { MoodQuiz } from "./_components/MoodQuiz";
 
 const ORDER_URL = "https://bitefoodcoffee.com/order";
 
@@ -205,6 +206,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <Featured />
+        <MoodQuiz />
         <PolaroidWall />
         <Reviews />
       </main>
