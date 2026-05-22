@@ -465,7 +465,7 @@ function Reviews() {
       </div>
 
       <div className="marquee-container py-12 lg:py-16">
-        <div className="flex animate-marquee gap-6 px-4 sm:px-6">
+        <div className="flex animate-marquee-slow gap-6 px-4 sm:px-6">
           {doubled.map((r, i) => (
             <figure
               key={i}
