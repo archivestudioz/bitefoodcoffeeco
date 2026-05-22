@@ -131,23 +131,22 @@ export function MoodQuiz() {
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close the Oracle" : "Open the Oracle"}
-        className={`group fixed bottom-3 right-3 z-50 flex items-end gap-2 transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
+        className={`cup-walker group fixed bottom-3 right-3 z-50 flex items-end transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <span className="mb-12 hidden translate-x-1 rotate-[-3deg] rounded-2xl border-2 border-ink bg-cream px-3 py-1.5 font-display text-sm leading-none text-ink shadow-bold-sm transition-transform group-hover:translate-x-0 group-hover:rotate-0 sm:inline-block">
-          stuck? ask me ✦
-        </span>
-        <span
-          className="relative block h-32 w-24 sm:h-40 sm:w-28"
-          style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
-        >
-          <OracleFace animated />
+        <span className="cup-facer block">
           <span
-            aria-hidden="true"
-            className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
+            className="relative block h-32 w-24 sm:h-40 sm:w-28"
+            style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
           >
-            ✦
+            <OracleFace animated />
+            <span
+              aria-hidden="true"
+              className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
+            >
+              ✦
+            </span>
           </span>
         </span>
       </button>

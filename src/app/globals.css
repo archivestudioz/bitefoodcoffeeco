@@ -115,6 +115,39 @@ body {
   93% { transform: rotate(-20deg); }
 }
 
+/* Cup actually traverses the page along the bottom edge */
+@keyframes cup-stroll {
+  /* pause at home (right edge) facing left, sip */
+  0%, 6% { transform: translateX(0); }
+  /* walk left across the page */
+  44% { transform: translateX(-65vw); }
+  /* pause at the far point */
+  46%, 54% { transform: translateX(-65vw); }
+  /* walk back home */
+  88% { transform: translateX(0); }
+  /* idle at home */
+  100% { transform: translateX(0); }
+}
+@keyframes cup-face-direction {
+  /* face left while walking left + pausing on the left */
+  0%, 50% { transform: scaleX(-1); }
+  /* face right after the turn + during the walk back + at home */
+  52%, 92% { transform: scaleX(1); }
+  /* flip back to face left ready for the next loop */
+  94%, 100% { transform: scaleX(-1); }
+}
+.cup-walker {
+  animation: cup-stroll 32s ease-in-out infinite;
+}
+.cup-facer {
+  animation: cup-face-direction 32s linear infinite;
+}
+/* Pause the stroll on hover so users have time to actually click the cup */
+.cup-walker:hover,
+.cup-walker:hover .cup-facer {
+  animation-play-state: paused;
+}
+
 /* Sticker wobble on hover */
 .wobble {
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
