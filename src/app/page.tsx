@@ -450,7 +450,7 @@ function Explore() {
 function Reviews() {
   const doubled = [...reviews, ...reviews];
   return (
-    <section className="marquee-container border-b-2 border-ink bg-tan overflow-hidden">
+    <section className="border-b-2 border-ink bg-tan overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 pt-16 sm:px-6 lg:pt-20">
         <div className="max-w-2xl">
           <span className="wobble inline-block rotate-[-2deg] rounded-full border-2 border-ink bg-pink px-4 py-1 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
@@ -464,12 +464,12 @@ function Reviews() {
         </div>
       </div>
 
-      <div className="py-12 lg:py-16">
+      <div className="marquee-container py-12 lg:py-16">
         <div className="flex animate-marquee gap-6 px-4 sm:px-6">
           {doubled.map((r, i) => (
             <figure
               key={i}
-              className={`flex w-[320px] shrink-0 flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold sm:w-[360px] ${r.bg} ${r.rotate}`}
+              className={`relative flex w-[320px] shrink-0 flex-col rounded-[28px] border-2 border-ink p-6 shadow-bold transition-transform duration-300 ease-out hover:scale-[1.06] hover:z-10 sm:w-[360px] ${r.bg} ${r.rotate}`}
             >
               <div className="flex gap-1 text-pink-deep" aria-label="5 stars">
                 {Array.from({ length: 5 }).map((_, j) => (
