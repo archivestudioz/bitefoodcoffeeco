@@ -138,8 +138,8 @@ export function MoodQuiz() {
         <span className="hidden translate-x-1 rotate-[-3deg] rounded-full border-2 border-ink bg-cream px-3 py-1.5 font-display text-sm leading-none text-ink shadow-bold-sm transition-transform group-hover:translate-x-0 group-hover:rotate-0 sm:inline-block">
           stuck? ask me ✦
         </span>
-        <span className="relative flex h-16 w-16 items-center justify-center rounded-full border-2 border-ink bg-pink shadow-bold transition-transform group-hover:-translate-y-1 sm:h-20 sm:w-20">
-          <OracleFace size={36} bobbing />
+        <span className="relative flex h-16 w-16 items-center justify-center rounded-full transition-transform group-hover:-translate-y-1 sm:h-20 sm:w-20" style={{ filter: "drop-shadow(5px 5px 0 #0a0a0a)" }}>
+          <OracleFace bobbing ticking />
           <span
             aria-hidden="true"
             className="absolute -right-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
@@ -164,8 +164,8 @@ export function MoodQuiz() {
           {/* Header */}
           <div className="flex items-center justify-between gap-3 border-b-2 border-ink bg-pink px-4 py-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-ink bg-cream">
-                <OracleFace size={22} />
+              <span className="flex h-10 w-10 items-center justify-center">
+                <OracleFace size={36} detailed={false} ticking />
               </span>
               <div className="leading-tight">
                 <p className="font-display text-xl leading-none">the oracle</p>
@@ -212,41 +212,118 @@ export function MoodQuiz() {
 }
 
 function OracleFace({
-  size = 36,
+  size,
+  className = "",
   bobbing = false,
+  ticking = false,
+  detailed = true,
 }: {
   size?: number;
+  className?: string;
   bobbing?: boolean;
+  ticking?: boolean;
+  detailed?: boolean;
 }) {
+  const sized = size ? { width: size, height: size } : undefined;
   return (
     <span
-      className={`inline-flex ${bobbing ? "animate-[bob_2.4s_ease-in-out_infinite]" : ""}`}
-      style={{ width: size, height: size }}
+      className={`relative inline-flex ${size ? "" : "h-full w-full"} ${bobbing ? "animate-[bob_2.4s_ease-in-out_infinite]" : ""} ${className}`}
+      style={sized}
       aria-hidden="true"
     >
       <svg
         viewBox="0 0 60 60"
-        width={size}
-        height={size}
+        width="100%"
+        height="100%"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Eyes */}
-        <circle cx="22" cy="26" r="3.6" fill="#0a0a0a" />
-        <circle cx="38" cy="26" r="3.6" fill="#0a0a0a" />
-        <circle cx="23.2" cy="24.6" r="1.1" fill="#fff5e6" />
-        <circle cx="39.2" cy="24.6" r="1.1" fill="#fff5e6" />
-        {/* Smile */}
-        <path
-          d="M 19 36 Q 30 46, 41 36"
+        {/* Outer clock rim */}
+        <circle
+          cx="30"
+          cy="30"
+          r="27"
+          fill="#ff98cb"
           stroke="#0a0a0a"
-          strokeWidth="3"
+          strokeWidth="2.5"
+        />
+        {/* Cream clock face */}
+        <circle cx="30" cy="30" r="22" fill="#fff5e6" />
+
+        {detailed && (
+          <>
+            {/* Hour marks at 12 / 3 / 6 / 9 */}
+            <rect x="29.2" y="9.5" width="1.6" height="3.5" rx="0.6" fill="#0a0a0a" />
+            <rect x="47" y="29.2" width="3.5" height="1.6" rx="0.6" fill="#0a0a0a" />
+            <rect x="29.2" y="47" width="1.6" height="3.5" rx="0.6" fill="#0a0a0a" />
+            <rect x="9.5" y="29.2" width="3.5" height="1.6" rx="0.6" fill="#0a0a0a" />
+            {/* Minor marks */}
+            <circle cx="44.8" cy="15.2" r="0.7" fill="#0a0a0a" />
+            <circle cx="44.8" cy="44.8" r="0.7" fill="#0a0a0a" />
+            <circle cx="15.2" cy="44.8" r="0.7" fill="#0a0a0a" />
+            <circle cx="15.2" cy="15.2" r="0.7" fill="#0a0a0a" />
+          </>
+        )}
+
+        {/* Clock hands group — origin at center for rotation */}
+        <g
+          style={{
+            transformOrigin: "30px 30px",
+          }}
+          className={ticking ? "[animation:tick_8s_steps(40)_infinite]" : ""}
+        >
+          {/* Minute hand */}
+          <line
+            x1="30"
+            y1="30"
+            x2="30"
+            y2="14"
+            stroke="#0a0a0a"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          {/* Hour hand */}
+          <line
+            x1="30"
+            y1="30"
+            x2="40"
+            y2="30"
+            stroke="#0a0a0a"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          />
+        </g>
+        {/* Pivot dot */}
+        <circle cx="30" cy="30" r="1.6" fill="#0a0a0a" />
+
+        {/* Eyes — sit above the clock face */}
+        <g>
+          <circle cx="22" cy="22" r="3.2" fill="#fff5e6" stroke="#0a0a0a" strokeWidth="1.5" />
+          <circle cx="38" cy="22" r="3.2" fill="#fff5e6" stroke="#0a0a0a" strokeWidth="1.5" />
+          <circle cx="22.6" cy="22.6" r="1.4" fill="#0a0a0a" />
+          <circle cx="38.6" cy="22.6" r="1.4" fill="#0a0a0a" />
+          <circle cx="22.9" cy="22" r="0.45" fill="#fff5e6" />
+          <circle cx="38.9" cy="22" r="0.45" fill="#fff5e6" />
+        </g>
+
+        {/* Wide grin */}
+        <path
+          d="M 19 38 Q 30 47.5, 41 38"
+          stroke="#0a0a0a"
+          strokeWidth="2.4"
           strokeLinecap="round"
           fill="none"
         />
-        {/* Cheek */}
-        <circle cx="17" cy="33" r="2" fill="#ff98cb" opacity="0.6" />
-        <circle cx="43" cy="33" r="2" fill="#ff98cb" opacity="0.6" />
+        {/* Inner mouth fill — gives it that cartoon depth */}
+        <path
+          d="M 21.5 38.5 Q 30 45, 38.5 38.5 Z"
+          fill="#ff98cb"
+          opacity="0.55"
+        />
+
+        {/* Cheeks */}
+        <circle cx="15.5" cy="31" r="1.8" fill="#ff98cb" opacity="0.85" />
+        <circle cx="44.5" cy="31" r="1.8" fill="#ff98cb" opacity="0.85" />
       </svg>
     </span>
   );
@@ -373,7 +450,7 @@ function ResultView({
     <div className="grid gap-4">
       <div className="flex items-start gap-2">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-pink">
-          <OracleFace size={18} />
+          <OracleFace size={18} detailed={false} />
         </span>
         <div className="rounded-2xl rounded-tl-md border-2 border-ink bg-pink/40 px-3 py-2 font-mono text-[12px] leading-snug">
           based on the vibes ✦ here&apos;s your bite:

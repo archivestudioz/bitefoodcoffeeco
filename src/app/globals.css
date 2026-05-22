@@ -75,6 +75,12 @@ body {
   50% { transform: translateY(-3px); }
 }
 
+/* Clock hands rotation (full revolution every 8s, stepped for cartoon tick) */
+@keyframes tick {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Sticker wobble on hover */
 .wobble {
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
