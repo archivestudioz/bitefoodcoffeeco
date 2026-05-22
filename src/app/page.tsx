@@ -175,7 +175,7 @@ function Nav() {
 function Hero() {
   return (
     <section className="relative overflow-hidden border-b-2 border-ink bg-pink">
-      {/* Background video */}
+      {/* Background video — opacity blends it with the pink section bg */}
       <video
         src="/photos/hero.mp4"
         poster="/photos/hero-poster.jpg"
@@ -184,18 +184,8 @@ function Hero() {
         loop
         playsInline
         preload="metadata"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover opacity-30"
         aria-hidden="true"
-      />
-
-      {/* Pink overlay — strong on the left for headline contrast, fading right */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-pink via-pink/80 to-pink/35"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-pink/40"
       />
 
       {/* Content */}
@@ -235,14 +225,6 @@ function Hero() {
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Stickers anchored to the hero section */}
-      <div className="wobble absolute bottom-6 left-6 z-20 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-5 py-2.5 font-display text-2xl shadow-bold-sm sm:bottom-8 sm:left-8 sm:text-3xl">
-        yum*
-      </div>
-      <div className="wobble absolute right-6 top-24 z-20 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm sm:right-10 sm:top-28">
-        new menu ✦
       </div>
     </section>
   );
