@@ -188,8 +188,8 @@ function Hero() {
         ✺
       </span>
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-12 md:items-center md:py-24 lg:py-28">
-        <div className="relative z-10 md:col-span-7">
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-16 sm:px-6 md:pt-24 md:pb-20 lg:pt-28 lg:pb-24">
+        <div className="relative z-10 max-w-3xl">
           <span className="wobble inline-flex -rotate-2 items-center gap-2 rounded-full border-2 border-ink bg-cream px-4 py-1.5 text-xs font-bold uppercase tracking-widest shadow-bold-sm">
             <span className="h-2 w-2 rounded-full bg-ink" />
             100% halal · NJ
@@ -225,8 +225,8 @@ function Hero() {
           </div>
         </div>
 
-        <div className="relative md:col-span-5">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
+        <div className="relative mt-14 md:mt-16">
+          <div className="relative aspect-video w-full overflow-hidden rounded-[40px] border-2 border-ink bg-cream shadow-bold">
             <video
               src="/photos/hero.mp4"
               poster="/photos/hero-poster.jpg"
@@ -239,10 +239,10 @@ function Hero() {
               aria-label="Late-night Bite vibes"
             />
           </div>
-          <div className="wobble absolute -bottom-4 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-4 py-2 font-display text-2xl shadow-bold-sm sm:-bottom-6 sm:-left-6">
+          <div className="wobble absolute -bottom-5 -left-4 rotate-[-8deg] rounded-2xl border-2 border-ink bg-cream px-5 py-2.5 font-display text-2xl shadow-bold-sm sm:-bottom-7 sm:-left-7 sm:text-3xl">
             yum*
           </div>
-          <div className="wobble absolute -top-3 -right-3 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm">
+          <div className="wobble absolute -top-4 -right-4 rotate-[10deg] rounded-full border-2 border-ink bg-ink px-4 py-2 text-xs font-bold uppercase tracking-widest text-pink shadow-bold-sm sm:-top-5 sm:-right-5">
             new menu ✦
           </div>
         </div>
