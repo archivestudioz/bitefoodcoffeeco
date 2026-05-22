@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Hunger = "light" | "medium" | "sending";
 type Time = "in-out" | "half-hour" | "all-day";
@@ -131,22 +131,20 @@ export function MoodQuiz() {
         type="button"
         onClick={() => setIsOpen((v) => !v)}
         aria-label={isOpen ? "Close the Oracle" : "Open the Oracle"}
-        className={`cup-walker group fixed bottom-3 right-3 z-50 flex items-end transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
+        className={`group fixed bottom-3 right-3 z-50 flex items-end transition-opacity duration-200 sm:bottom-5 sm:right-5 ${
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <span className="cup-facer block">
+        <span
+          className="relative block h-32 w-24 sm:h-40 sm:w-28"
+          style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
+        >
+          <OracleFace animated />
           <span
-            className="relative block h-32 w-24 sm:h-40 sm:w-28"
-            style={{ filter: "drop-shadow(4px 4px 0 rgba(10,10,10,0.35))" }}
+            aria-hidden="true"
+            className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
           >
-            <OracleFace animated />
-            <span
-              aria-hidden="true"
-              className="absolute -right-2 top-2 inline-flex h-6 w-6 rotate-12 items-center justify-center rounded-full border-2 border-ink bg-cream font-display text-base leading-none text-ink shadow-bold-sm"
-            >
-              ✦
-            </span>
+            ✦
           </span>
         </span>
       </button>
@@ -225,11 +223,85 @@ function OracleFace({
   detailed?: boolean;
 }) {
   const sized = size ? { width: size, height: size } : undefined;
-  // 100x140 viewBox: tall character with straw + legs when detailed,
-  // shorter framing when not (chat avatars hide arms/legs).
   const viewBox = detailed ? "0 0 100 140" : "20 30 60 60";
+
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  const leanRef = useRef<SVGGElement>(null);
+  const pupilLeftRef = useRef<SVGCircleElement>(null);
+  const pupilRightRef = useRef<SVGCircleElement>(null);
+  const highlightLeftRef = useRef<SVGCircleElement>(null);
+  const highlightRightRef = useRef<SVGCircleElement>(null);
+
+  useEffect(() => {
+    if (!animated) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+
+    let raf = 0;
+    let targetEyeX = 0;
+    let targetEyeY = 0;
+    let targetLean = 0;
+    let curEyeX = 0;
+    let curEyeY = 0;
+    let curLean = 0;
+
+    const onMove = (e: MouseEvent) => {
+      const box = wrapper.getBoundingClientRect();
+      // Aim at where the eyes actually sit (~47% from the top of the bounding box).
+      const cx = box.left + box.width / 2;
+      const cy = box.top + box.height * 0.47;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+
+      // Eye target in SVG units (max ~2.4 keeps the pupil inside the sclera).
+      const factor = Math.min(1, dist / 360);
+      const maxOffset = 2.4;
+      if (dist > 0.5) {
+        targetEyeX = factor * maxOffset * (dx / dist);
+        targetEyeY = factor * maxOffset * (dy / dist);
+      } else {
+        targetEyeX = 0;
+        targetEyeY = 0;
+      }
+
+      // Subtle horizontal lean toward the cursor (max 4 degrees).
+      const maxLean = 4;
+      targetLean = Math.max(-maxLean, Math.min(maxLean, dx * 0.012));
+    };
+
+    const tick = () => {
+      // Lerp toward target — eyes faster, body slower.
+      curEyeX += (targetEyeX - curEyeX) * 0.18;
+      curEyeY += (targetEyeY - curEyeY) * 0.18;
+      curLean += (targetLean - curLean) * 0.1;
+
+      const pupilT = `translate(${curEyeX}px, ${curEyeY}px)`;
+      const hiT = `translate(${curEyeX * 0.7}px, ${curEyeY * 0.7}px)`;
+      if (pupilLeftRef.current) pupilLeftRef.current.style.transform = pupilT;
+      if (pupilRightRef.current) pupilRightRef.current.style.transform = pupilT;
+      if (highlightLeftRef.current)
+        highlightLeftRef.current.style.transform = hiT;
+      if (highlightRightRef.current)
+        highlightRightRef.current.style.transform = hiT;
+      if (leanRef.current)
+        leanRef.current.style.transform = `rotate(${curLean.toFixed(3)}deg)`;
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("mousemove", onMove, { passive: true });
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("mousemove", onMove);
+    };
+  }, [animated]);
+
   return (
     <span
+      ref={wrapperRef}
       className={`relative inline-flex ${size ? "" : "h-full w-full"} ${className}`}
       style={sized}
       aria-hidden="true"
@@ -242,28 +314,23 @@ function OracleFace({
         xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="xMidYMid meet"
       >
-        {/* Whole character group — gets the hop + wiggle on bigger sizes */}
+        {/* Outer group: subtle breathing scale. Origin at the feet. */}
         <g
-          style={{
-            transformOrigin: "50px 130px",
-            transformBox: "fill-box",
-            animation: animated
-              ? "cup-hop 6.5s cubic-bezier(0.5,0,0.5,1) infinite"
-              : undefined,
-          }}
+          className={animated ? "cup-breathing" : undefined}
+          style={{ transformBox: "fill-box", transformOrigin: "50% 100%" }}
         >
-          {detailed && (
-            <>
-              {/* Legs */}
-              <g
-                style={{
-                  transformOrigin: "40px 100px",
-                  transformBox: "fill-box",
-                  animation: animated
-                    ? "cup-walk-left 9.7s ease-in-out infinite"
-                    : undefined,
-                }}
-              >
+          {/* Inner group: cursor-driven body lean rotation. Same origin at the feet. */}
+          <g
+            ref={leanRef}
+            style={{
+              transformBox: "fill-box",
+              transformOrigin: "50px 130px",
+              transition: "transform 0.04s linear",
+            }}
+          >
+            {detailed && (
+              <>
+                {/* Legs (static now) */}
                 <line
                   x1="40"
                   y1="100"
@@ -282,16 +349,6 @@ function OracleFace({
                   stroke="#0a0a0a"
                   strokeWidth="2.5"
                 />
-              </g>
-              <g
-                style={{
-                  transformOrigin: "60px 100px",
-                  transformBox: "fill-box",
-                  animation: animated
-                    ? "cup-walk-right 11.3s ease-in-out infinite"
-                    : undefined,
-                }}
-              >
                 <line
                   x1="60"
                   y1="100"
@@ -310,18 +367,8 @@ function OracleFace({
                   stroke="#0a0a0a"
                   strokeWidth="2.5"
                 />
-              </g>
 
-              {/* Left arm (resting) */}
-              <g
-                style={{
-                  transformOrigin: "28px 78px",
-                  transformBox: "fill-box",
-                  animation: animated
-                    ? "cup-sip 13.3s ease-in-out infinite"
-                    : undefined,
-                }}
-              >
+                {/* Left arm (resting) */}
                 <path
                   d="M 28 78 Q 16 92 14 108"
                   stroke="#0a0a0a"
@@ -337,18 +384,8 @@ function OracleFace({
                   stroke="#0a0a0a"
                   strokeWidth="2.5"
                 />
-              </g>
 
-              {/* Right arm (waving) */}
-              <g
-                style={{
-                  transformOrigin: "72px 78px",
-                  transformBox: "fill-box",
-                  animation: animated
-                    ? "cup-wave 7.7s ease-in-out infinite"
-                    : undefined,
-                }}
-              >
+                {/* Right arm (thumbs up) */}
                 <path
                   d="M 72 78 Q 85 75 90 64"
                   stroke="#0a0a0a"
@@ -356,7 +393,6 @@ function OracleFace({
                   fill="none"
                   strokeLinecap="round"
                 />
-                {/* Thumbs up hand */}
                 <circle
                   cx="92"
                   cy="61"
@@ -374,62 +410,50 @@ function OracleFace({
                   strokeWidth="2.5"
                   strokeLinecap="round"
                 />
-              </g>
 
-              {/* Straw */}
-              <line
-                x1="50"
-                y1="8"
-                x2="50"
-                y2="42"
-                stroke="#0a0a0a"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-              {/* Lid */}
-              <ellipse
-                cx="50"
-                cy="42"
-                rx="24"
-                ry="5"
-                fill="#fff5e6"
-                stroke="#0a0a0a"
-                strokeWidth="2.5"
-              />
-              {/* Lid hole indicator */}
-              <ellipse
-                cx="50"
-                cy="42"
-                rx="6"
-                ry="1.5"
-                fill="none"
-                stroke="#0a0a0a"
-                strokeWidth="1.5"
-              />
-            </>
-          )}
+                {/* Straw + lid */}
+                <line
+                  x1="50"
+                  y1="8"
+                  x2="50"
+                  y2="42"
+                  stroke="#0a0a0a"
+                  strokeWidth="5"
+                  strokeLinecap="round"
+                />
+                <ellipse
+                  cx="50"
+                  cy="42"
+                  rx="24"
+                  ry="5"
+                  fill="#fff5e6"
+                  stroke="#0a0a0a"
+                  strokeWidth="2.5"
+                />
+                <ellipse
+                  cx="50"
+                  cy="42"
+                  rx="6"
+                  ry="1.5"
+                  fill="none"
+                  stroke="#0a0a0a"
+                  strokeWidth="1.5"
+                />
+              </>
+            )}
 
-          {/* Cup body */}
-          <path
-            d="M 28 44 L 33 96 Q 33 100 37 100 L 63 100 Q 67 100 67 96 L 72 44 Z"
-            fill="#ff98cb"
-            stroke="#0a0a0a"
-            strokeWidth="2.5"
-            strokeLinejoin="round"
-          />
+            {/* Cup body */}
+            <path
+              d="M 28 44 L 33 96 Q 33 100 37 100 L 63 100 Q 67 100 67 96 L 72 44 Z"
+              fill="#ff98cb"
+              stroke="#0a0a0a"
+              strokeWidth="2.5"
+              strokeLinejoin="round"
+            />
 
-          {/* Face — group so eyes blink together */}
-          <g>
-            {/* Eyes */}
-            <g
-              style={{
-                transformOrigin: "50px 66px",
-                transformBox: "fill-box",
-                animation: animated
-                  ? "cup-blink 4.3s ease-in-out infinite"
-                  : undefined,
-              }}
-            >
+            {/* Face */}
+            <g>
+              {/* Sclera (whites) */}
               <ellipse
                 cx="42"
                 cy="66"
@@ -448,24 +472,54 @@ function OracleFace({
                 stroke="#0a0a0a"
                 strokeWidth="2"
               />
-              <circle cx="43" cy="66" r="3.2" fill="#0a0a0a" />
-              <circle cx="59" cy="66" r="3.2" fill="#0a0a0a" />
-              <circle cx="44.2" cy="64.5" r="1.1" fill="#fff5e6" />
-              <circle cx="60.2" cy="64.5" r="1.1" fill="#fff5e6" />
+              {/* Pupils — translate via ref to track cursor */}
+              <circle
+                ref={pupilLeftRef}
+                cx="42"
+                cy="66"
+                r="3.2"
+                fill="#0a0a0a"
+                style={{ willChange: "transform" }}
+              />
+              <circle
+                ref={pupilRightRef}
+                cx="58"
+                cy="66"
+                r="3.2"
+                fill="#0a0a0a"
+                style={{ willChange: "transform" }}
+              />
+              {/* Highlights — translate a bit less for parallax */}
+              <circle
+                ref={highlightLeftRef}
+                cx="43.2"
+                cy="64.5"
+                r="1.1"
+                fill="#fff5e6"
+                style={{ willChange: "transform" }}
+              />
+              <circle
+                ref={highlightRightRef}
+                cx="59.2"
+                cy="64.5"
+                r="1.1"
+                fill="#fff5e6"
+                style={{ willChange: "transform" }}
+              />
+
+              {/* Smile */}
+              <path
+                d="M 43 79 Q 50 84 57 79"
+                stroke="#0a0a0a"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                fill="none"
+              />
+
+              {/* Cheeks */}
+              <circle cx="35" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
+              <circle cx="65" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
             </g>
-
-            {/* Smile */}
-            <path
-              d="M 43 79 Q 50 84 57 79"
-              stroke="#0a0a0a"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              fill="none"
-            />
-
-            {/* Cheeks */}
-            <circle cx="35" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
-            <circle cx="65" cy="78" r="2.4" fill="#0a0a0a" opacity="0.18" />
           </g>
         </g>
       </svg>

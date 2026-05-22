@@ -81,71 +81,15 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Cup character animations — staggered prime-ish periods so motions overlap naturally */
-@keyframes cup-hop {
-  0%, 78%, 100% { transform: translateY(0) rotate(0deg); }
-  84% { transform: translateY(-14px) rotate(-3deg); }
-  90% { transform: translateY(0) rotate(2deg); }
-  93% { transform: translateY(-3px); }
-  96% { transform: translateY(0) rotate(0deg); }
+/* Subtle "breathing" — body scales 1% up and back on a slow loop.
+   Used by the cursor-tracking Oracle. */
+@keyframes cup-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.018); }
 }
-@keyframes cup-wave {
-  0%, 82%, 100% { transform: rotate(0deg); }
-  86% { transform: rotate(-32deg); }
-  90% { transform: rotate(18deg); }
-  94% { transform: rotate(-22deg); }
-  98% { transform: rotate(0deg); }
-}
-@keyframes cup-sip {
-  0%, 80%, 100% { transform: rotate(0deg); }
-  86%, 92% { transform: rotate(-7deg); }
-}
-@keyframes cup-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95%, 97% { transform: scaleY(0.1); }
-}
-@keyframes cup-walk-left {
-  0%, 85%, 100% { transform: rotate(0deg); }
-  88% { transform: rotate(-25deg); }
-  93% { transform: rotate(20deg); }
-}
-@keyframes cup-walk-right {
-  0%, 85%, 100% { transform: rotate(0deg); }
-  88% { transform: rotate(25deg); }
-  93% { transform: rotate(-20deg); }
-}
-
-/* Cup actually traverses the page along the bottom edge */
-@keyframes cup-stroll {
-  /* pause at home (right edge) facing left, sip */
-  0%, 6% { transform: translateX(0); }
-  /* walk left across the page */
-  44% { transform: translateX(-65vw); }
-  /* pause at the far point */
-  46%, 54% { transform: translateX(-65vw); }
-  /* walk back home */
-  88% { transform: translateX(0); }
-  /* idle at home */
-  100% { transform: translateX(0); }
-}
-@keyframes cup-face-direction {
-  /* face left while walking left + pausing on the left */
-  0%, 50% { transform: scaleX(-1); }
-  /* face right after the turn + during the walk back + at home */
-  52%, 92% { transform: scaleX(1); }
-  /* flip back to face left ready for the next loop */
-  94%, 100% { transform: scaleX(-1); }
-}
-.cup-walker {
-  animation: cup-stroll 32s ease-in-out infinite;
-}
-.cup-facer {
-  animation: cup-face-direction 32s linear infinite;
-}
-/* Pause the stroll on hover so users have time to actually click the cup */
-.cup-walker:hover,
-.cup-walker:hover .cup-facer {
-  animation-play-state: paused;
+.cup-breathing {
+  animation: cup-breathe 4.2s ease-in-out infinite;
+  transform-origin: 50% 100%;
 }
 
 /* Sticker wobble on hover */
