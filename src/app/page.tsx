@@ -377,29 +377,31 @@ function PolaroidWall() {
         </div>
       </div>
 
-      <div className="marquee-container pb-24 lg:pb-32">
-        <div className="flex animate-marquee-slow gap-8 px-6 sm:px-10 lg:px-12">
-          {doubled.map((p, i) => (
-            <figure
-              key={i}
-              className={`lift relative w-[260px] shrink-0 overflow-hidden rounded-2xl border-2 border-ink shadow-bold sm:w-[300px] lg:w-[340px] ${p.bg} ${p.rotate}`}
-            >
-              <div className="relative aspect-[3/4] overflow-hidden border-b-2 border-ink">
-                <Image
-                  src={p.src}
-                  alt={p.alt}
-                  fill
-                  sizes="(min-width: 1024px) 340px, (min-width: 640px) 300px, 260px"
-                  className="object-cover transition duration-500 hover:scale-105"
-                />
-              </div>
-              <figcaption className="px-5 py-4">
-                <span className="inline-block rotate-[-2deg] font-display text-2xl leading-none">
-                  {p.caption}
-                </span>
-              </figcaption>
-            </figure>
-          ))}
+      <div className="pb-24 lg:pb-32">
+        <div className="marquee-container">
+          <div className="flex animate-marquee-slow gap-8 px-6 sm:px-10 lg:px-12">
+            {doubled.map((p, i) => (
+              <figure
+                key={i}
+                className={`relative w-[260px] shrink-0 overflow-hidden rounded-2xl border-2 border-ink shadow-bold transition-transform duration-300 ease-out hover:scale-[1.06] hover:z-10 sm:w-[300px] lg:w-[340px] ${p.bg} ${p.rotate}`}
+              >
+                <div className="relative aspect-[3/4] overflow-hidden border-b-2 border-ink">
+                  <Image
+                    src={p.src}
+                    alt={p.alt}
+                    fill
+                    sizes="(min-width: 1024px) 340px, (min-width: 640px) 300px, 260px"
+                    className="object-cover"
+                  />
+                </div>
+                <figcaption className="px-5 py-4">
+                  <span className="inline-block rotate-[-2deg] font-display text-2xl leading-none">
+                    {p.caption}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </div>
     </section>
